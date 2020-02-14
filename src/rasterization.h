@@ -7,7 +7,7 @@
 static inline float compute_pixel_opacity(vec2 top_left, float offset_step, vec2 disc_center, float squared_radius)
 {
     float opacity = 0.f;
-    vec offset = {offset_step, offset_step};
+    vec2 offset = {offset_step, offset_step};
     for(int y=0; y<4; ++y)
     {
         offset.x = offset_step;
@@ -15,7 +15,7 @@ static inline float compute_pixel_opacity(vec2 top_left, float offset_step, vec2
         {            
             vec2 sample_position = vec2_add(top_left, offset);
             
-            if (vec2_sqdistance(sample_position, disc_center) < squared_radius)
+            if (vec2_sq_distance(sample_position, disc_center) < squared_radius)
             {
                 opacity += 0.0625f; // 1.f/16.f
             }            
