@@ -17,4 +17,4 @@ The disc pattern brush is applied with kind of MSAA, each pixel we check 16 samp
 Goal is to generate big high quality images (4k and more). Most computation happen on big array and can be splitted :
 * array of angle can be computed separetly on multiple thread
 * simulating points is independant, can be splitted
-* drawing points also can be splitted in different bucket that prevent accessing to the same pixel, we may need one more bucket for all points on edges
+* drawing points also can be splitted in different bucket that prevent accessing to the same pixel
