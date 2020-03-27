@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB66DD59242E6BED0093B249 /* parg.c in Sources */ = {isa = PBXBuildFile; fileRef = FB66DD58242E6BED0093B249 /* parg.c */; };
 		FB6DEF8C23F62B0900B14D70 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = FB6DEF8B23F62B0900B14D70 /* main.c */; };
 		FB6DEF9223F62B6B00B14D70 /* stb_perlin.c in Sources */ = {isa = PBXBuildFile; fileRef = FB6DEF9123F62B6B00B14D70 /* stb_perlin.c */; };
 		FB6DEF9523F62C3700B14D70 /* sched.c in Sources */ = {isa = PBXBuildFile; fileRef = FB6DEF9323F62C3700B14D70 /* sched.c */; };
@@ -27,6 +28,8 @@
 
 /* Begin PBXFileReference section */
 		FB24F1A123F62A1F007BE23D /* Flow */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Flow; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB66DD57242E6BEC0093B249 /* parg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = parg.h; path = src/extern/parg.h; sourceTree = "<group>"; };
+		FB66DD58242E6BED0093B249 /* parg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = parg.c; path = src/extern/parg.c; sourceTree = "<group>"; };
 		FB6DEF8A23F62B0800B14D70 /* rasterization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rasterization.h; sourceTree = "<group>"; };
 		FB6DEF8B23F62B0900B14D70 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		FB6DEF8D23F62B1600B14D70 /* stb_perlin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stb_perlin.h; path = src/extern/stb_perlin.h; sourceTree = "<group>"; };
@@ -78,6 +81,8 @@
 		FB6DEF8923F62AF700B14D70 /* extern */ = {
 			isa = PBXGroup;
 			children = (
+				FB66DD58242E6BED0093B249 /* parg.c */,
+				FB66DD57242E6BEC0093B249 /* parg.h */,
 				FB6DEF9323F62C3700B14D70 /* sched.c */,
 				FB6DEF9423F62C3700B14D70 /* stb_image_write.c */,
 				FB6DEF9123F62B6B00B14D70 /* stb_perlin.c */,
@@ -146,6 +151,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB66DD59242E6BED0093B249 /* parg.c in Sources */,
 				FB6DEF9523F62C3700B14D70 /* sched.c in Sources */,
 				FB6DEF8C23F62B0900B14D70 /* main.c in Sources */,
 				FB6DEF9223F62B6B00B14D70 /* stb_perlin.c in Sources */,
