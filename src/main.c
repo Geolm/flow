@@ -36,5 +36,10 @@ int main(int argc, const char * argv[])
         }
     }
 
+    // SDF => normal
+    // sdf(position + vec2(epsilon, 0)), sdf(position + vec2(0, epsilon))
+    // tangent = vec2_skew(normal)
+    // angle = atan2(tangent);
+
     return 0;
 }
