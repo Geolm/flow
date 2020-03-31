@@ -12,6 +12,7 @@
 		FB6DEF9223F62B6B00B14D70 /* stb_perlin.c in Sources */ = {isa = PBXBuildFile; fileRef = FB6DEF9123F62B6B00B14D70 /* stb_perlin.c */; };
 		FB6DEF9523F62C3700B14D70 /* sched.c in Sources */ = {isa = PBXBuildFile; fileRef = FB6DEF9323F62C3700B14D70 /* sched.c */; };
 		FB6DEF9623F62C3700B14D70 /* stb_image_write.c in Sources */ = {isa = PBXBuildFile; fileRef = FB6DEF9423F62C3700B14D70 /* stb_image_write.c */; };
+		FBA6036724336D7000C69EF3 /* angle.c in Sources */ = {isa = PBXBuildFile; fileRef = FBA6036524336D7000C69EF3 /* angle.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,6 +40,8 @@
 		FB6DEF9123F62B6B00B14D70 /* stb_perlin.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = stb_perlin.c; path = src/extern/stb_perlin.c; sourceTree = "<group>"; };
 		FB6DEF9323F62C3700B14D70 /* sched.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sched.c; path = src/extern/sched.c; sourceTree = "<group>"; };
 		FB6DEF9423F62C3700B14D70 /* stb_image_write.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = stb_image_write.c; path = src/extern/stb_image_write.c; sourceTree = "<group>"; };
+		FBA6036524336D7000C69EF3 /* angle.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = angle.c; sourceTree = "<group>"; };
+		FBA6036624336D7000C69EF3 /* angle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = angle.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +75,8 @@
 		FB24F1A323F62A1F007BE23D /* src */ = {
 			isa = PBXGroup;
 			children = (
+				FBA6036524336D7000C69EF3 /* angle.c */,
+				FBA6036624336D7000C69EF3 /* angle.h */,
 				FB6DEF8B23F62B0900B14D70 /* main.c */,
 				FB6DEF8A23F62B0800B14D70 /* rasterization.h */,
 			);
@@ -154,6 +159,7 @@
 				FB66DD59242E6BED0093B249 /* parg.c in Sources */,
 				FB6DEF9523F62C3700B14D70 /* sched.c in Sources */,
 				FB6DEF8C23F62B0900B14D70 /* main.c in Sources */,
+				FBA6036724336D7000C69EF3 /* angle.c in Sources */,
 				FB6DEF9223F62B6B00B14D70 /* stb_perlin.c in Sources */,
 				FB6DEF9623F62C3700B14D70 /* stb_image_write.c in Sources */,
 			);

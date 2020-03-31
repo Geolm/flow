@@ -119,4 +119,9 @@ static inline vec2 vec2_quadratic_bezier(vec2 p0, vec2 p1, vec2 p2, float t)
     return vec2_add(vec2_add(vec2_scale(p0, one_minus_t * one_minus_t), vec2_scale(p1, 2.f * one_minus_t * t)), vec2_scale(p2, t * t));
 }
 
+static inline vec2 vec2_abs(vec2 a)
+{
+    return (vec2) {.x = fabs(a.x), .y = fabs(a.y)};
+}
+
 #endif 

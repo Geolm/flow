@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "parg.h"
+#include "angle.h"
 
 int main(int argc, const char * argv[])
 {
@@ -36,10 +37,12 @@ int main(int argc, const char * argv[])
         }
     }
 
-    // SDF => normal
-    // sdf(position + vec2(epsilon, 0)), sdf(position + vec2(0, epsilon))
-    // tangent = vec2_skew(normal)
-    // angle = atan2(tangent);
+    int pixels_count = output_width * output_height;
+    float* angle_buffer = (float*) malloc(pixels_count * sizeof(float));
+
+    fill_angle_buffer(angle_buffer, output_width, output_height);
+
+    free(angle_buffer);
 
     return 0;
 }
