@@ -12,7 +12,7 @@
 #include "angle.h"
 
 //-----------------------------------------------------------------------------
-int main(int argc, const char * argv[])
+int main(int argc, char* const argv[])
 {
     struct parg_state ps;
     int c;
