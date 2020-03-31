@@ -13,6 +13,7 @@
 		FB6DEF9523F62C3700B14D70 /* sched.c in Sources */ = {isa = PBXBuildFile; fileRef = FB6DEF9323F62C3700B14D70 /* sched.c */; };
 		FB6DEF9623F62C3700B14D70 /* stb_image_write.c in Sources */ = {isa = PBXBuildFile; fileRef = FB6DEF9423F62C3700B14D70 /* stb_image_write.c */; };
 		FBA6036724336D7000C69EF3 /* angle.c in Sources */ = {isa = PBXBuildFile; fileRef = FBA6036524336D7000C69EF3 /* angle.c */; };
+		FBC6A78A2433BBFE00C8A07C /* rasterization.c in Sources */ = {isa = PBXBuildFile; fileRef = FBC6A7892433BBFD00C8A07C /* rasterization.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -42,6 +43,7 @@
 		FB6DEF9423F62C3700B14D70 /* stb_image_write.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = stb_image_write.c; path = src/extern/stb_image_write.c; sourceTree = "<group>"; };
 		FBA6036524336D7000C69EF3 /* angle.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = angle.c; sourceTree = "<group>"; };
 		FBA6036624336D7000C69EF3 /* angle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = angle.h; sourceTree = "<group>"; };
+		FBC6A7892433BBFD00C8A07C /* rasterization.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rasterization.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 				FBA6036524336D7000C69EF3 /* angle.c */,
 				FBA6036624336D7000C69EF3 /* angle.h */,
 				FB6DEF8B23F62B0900B14D70 /* main.c */,
+				FBC6A7892433BBFD00C8A07C /* rasterization.c */,
 				FB6DEF8A23F62B0800B14D70 /* rasterization.h */,
 			);
 			path = src;
@@ -156,6 +159,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBC6A78A2433BBFE00C8A07C /* rasterization.c in Sources */,
 				FB66DD59242E6BED0093B249 /* parg.c in Sources */,
 				FB6DEF9523F62C3700B14D70 /* sched.c in Sources */,
 				FB6DEF8C23F62B0900B14D70 /* main.c in Sources */,

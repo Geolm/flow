@@ -41,7 +41,7 @@ int main(int argc, const char * argv[])
     int pixels_count = output_width * output_height;
     float* angle_buffer = (float*) malloc(pixels_count * sizeof(float));
 
-    fill_angle_buffer(angle_buffer, output_width, output_height);
+    fill_angle_buffer(angle_buffer, output_width, output_height, 0, output_height);
 
     free(angle_buffer);
 
