@@ -38,12 +38,13 @@ int main(int argc, char* const argv[])
         }
     }
 
-    int pixels_count = output_width * output_height;
-    float* angle_buffer = (float*) malloc(pixels_count * sizeof(float));
+    angle_buffer angles;
 
-    fill_angle_buffer(angle_buffer, output_width, output_height, 0, output_height);
+    init_angle_buffer(&angles, output_height, output_width);
 
-    free(angle_buffer);
+    fill_angle_buffer(&angles, 0, output_height);
+
+    terminate_angle_buffer(&angles);
 
     return 0;
 }

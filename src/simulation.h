@@ -6,11 +6,11 @@
 
 typedef struct
 {
-    vec2 position;
-    color4f color_start;
-    color4f color_end;
+    vec2 current_position;
+    vec2 last_position;
 } particle;
 
 
+void simulate_particle(particle* particle_buffer, int range_min, int range_max);
 
 #endif // __SIMULATION__H_
