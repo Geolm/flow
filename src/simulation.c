@@ -1,8 +1,25 @@
 #include "simulation.h"
 #include "angle.h"
+#include "extern/random.h"
 
 //-----------------------------------------------------------------------------
-void simulate_particle(image_buffers const* images, float position_step, particle* particles, int range_min, int range_max)
+void init_particles(int* random_seed, float life_step, particle* particles, int range_min, int range_max)
+{
+    float random_step_part = life_step * 0.01f;
+    for(int i=range_min; i<range_max; ++i)
+    {
+        particle* p = &particles[i];
+
+        p->current_position.x = iq_random_float(random_seed);
+        p->current_position.y = iq_random_float(random_seed);
+        p->last_position = p->current_position;
+        p->life = 0.f;
+        p->life_step = life_step + iq_random_float(random_seed) * random_step_part;
+    }
+}
+
+//-----------------------------------------------------------------------------
+void simulate_particles(image_buffers const* images, float position_step, particle* particles, int range_min, int range_max)
 {
     for(int i=range_min; i<range_max; ++i)
     {
