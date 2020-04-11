@@ -11,6 +11,8 @@ typedef struct
     int pixels_count;
     float x_to_u;
     float y_to_v;
+    float width_float;
+    float height_float;
     float* angle_buffer;
     uint32_t* color_buffer;
 } image_buffers;
