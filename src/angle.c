@@ -40,7 +40,7 @@ float fetch_angle_buffer(image_buffers* buffer, float u, float v)
     int pixel_y = (int) y_int;
 
     // do bilinear filtering if not on the edge
-    if (pixel_x < buffer->width - 1 && pixel_y < buffer->height)
+    if (pixel_x < (buffer->width - 1) && pixel_y < (buffer->height - 1))
     {
         // a b
         // c d
