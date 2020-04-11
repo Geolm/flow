@@ -124,4 +124,24 @@ static inline vec2 vec2_abs(vec2 a)
     return (vec2) {.x = fabs(a.x), .y = fabs(a.y)};
 }
 
+static inline bool vec2_all_less(vec2 a, vec2 b)
+{
+    return (a.x < b.x && a.y < b.y);
+}
+
+static inline bool vec2_any_less(vec2 a, vec2 b)
+{
+    return (a.x < b.x || a.y < b.y);
+}
+
+static inline bool vec2_all_greater(vec2 a, vec2 b)
+{
+    return (a.x > b.x && a.y > b.y);
+}
+
+static inline bool vec2_any_greater(vec2 a, vec2 b)
+{
+    return (a.x > b.x || a.y > b.y);
+}
+
 #endif 
