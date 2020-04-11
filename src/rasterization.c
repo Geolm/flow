@@ -7,8 +7,7 @@ static inline float clamp(float value, float min_value, float max_value)
 }
 
 //-----------------------------------------------------------------------------
-float compute_pixel_opacity(vec2 top_left, vec2 offset_step, sq_distance_func_ptr sq_distance_func,
-                            void* params, float squared_distance)
+float compute_pixel_opacity(vec2 top_left, vec2 offset_step, sq_distance_func_ptr sq_distance_func, void* params, float squared_distance)
 {
     float opacity = 0.f;
     vec2 offset = offset_step;

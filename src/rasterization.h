@@ -11,8 +11,7 @@ typedef float (*sq_distance_func_ptr)(vec2 sample_position, void* params);
 // offset_step is 1/5 of pixel (uv)
 // sq_distance_func function that computes the squared distance to sample position
 // squared_distance if the function returns below that the sample is considered opaque
-float compute_pixel_opacity(vec2 top_left, vec2 offset_step, sq_distance_func_ptr sq_distance_func, 
-                            void* params, float squared_distance);
+float compute_pixel_opacity(vec2 top_left, vec2 offset_step, sq_distance_func_ptr sq_distance_func, void* params, float squared_distance);
 
 //-----------------------------------------------------------------------------
 typedef struct 
