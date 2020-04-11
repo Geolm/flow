@@ -12,6 +12,7 @@
 		FB6DEF9223F62B6B00B14D70 /* stb_perlin.c in Sources */ = {isa = PBXBuildFile; fileRef = FB6DEF9123F62B6B00B14D70 /* stb_perlin.c */; };
 		FB6DEF9523F62C3700B14D70 /* sched.c in Sources */ = {isa = PBXBuildFile; fileRef = FB6DEF9323F62C3700B14D70 /* sched.c */; };
 		FB6DEF9623F62C3700B14D70 /* stb_image_write.c in Sources */ = {isa = PBXBuildFile; fileRef = FB6DEF9423F62C3700B14D70 /* stb_image_write.c */; };
+		FB9DA6B82441FDD7009BE2CB /* simulation.c in Sources */ = {isa = PBXBuildFile; fileRef = FB9DA6B72441FDD7009BE2CB /* simulation.c */; };
 		FBA6036724336D7000C69EF3 /* angle.c in Sources */ = {isa = PBXBuildFile; fileRef = FBA6036524336D7000C69EF3 /* angle.c */; };
 		FBC6A78A2433BBFE00C8A07C /* rasterization.c in Sources */ = {isa = PBXBuildFile; fileRef = FBC6A7892433BBFD00C8A07C /* rasterization.c */; };
 /* End PBXBuildFile section */
@@ -41,6 +42,9 @@
 		FB6DEF9123F62B6B00B14D70 /* stb_perlin.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = stb_perlin.c; path = src/extern/stb_perlin.c; sourceTree = "<group>"; };
 		FB6DEF9323F62C3700B14D70 /* sched.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sched.c; path = src/extern/sched.c; sourceTree = "<group>"; };
 		FB6DEF9423F62C3700B14D70 /* stb_image_write.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = stb_image_write.c; path = src/extern/stb_image_write.c; sourceTree = "<group>"; };
+		FB9DA6B52441FDD7009BE2CB /* simulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simulation.h; sourceTree = "<group>"; };
+		FB9DA6B62441FDD7009BE2CB /* image_buffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = image_buffers.h; sourceTree = "<group>"; };
+		FB9DA6B72441FDD7009BE2CB /* simulation.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = simulation.c; sourceTree = "<group>"; };
 		FBA6036524336D7000C69EF3 /* angle.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = angle.c; sourceTree = "<group>"; };
 		FBA6036624336D7000C69EF3 /* angle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = angle.h; sourceTree = "<group>"; };
 		FBC6A7892433BBFD00C8A07C /* rasterization.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rasterization.c; sourceTree = "<group>"; };
@@ -77,6 +81,9 @@
 		FB24F1A323F62A1F007BE23D /* src */ = {
 			isa = PBXGroup;
 			children = (
+				FB9DA6B62441FDD7009BE2CB /* image_buffers.h */,
+				FB9DA6B72441FDD7009BE2CB /* simulation.c */,
+				FB9DA6B52441FDD7009BE2CB /* simulation.h */,
 				FBA6036524336D7000C69EF3 /* angle.c */,
 				FBA6036624336D7000C69EF3 /* angle.h */,
 				FB6DEF8B23F62B0900B14D70 /* main.c */,
@@ -161,6 +168,7 @@
 			files = (
 				FBC6A78A2433BBFE00C8A07C /* rasterization.c in Sources */,
 				FB66DD59242E6BED0093B249 /* parg.c in Sources */,
+				FB9DA6B82441FDD7009BE2CB /* simulation.c in Sources */,
 				FB6DEF9523F62C3700B14D70 /* sched.c in Sources */,
 				FB6DEF8C23F62B0900B14D70 /* main.c in Sources */,
 				FBA6036724336D7000C69EF3 /* angle.c in Sources */,

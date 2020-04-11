@@ -9,7 +9,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "parg.h"
+#include "image_buffers.h"
 #include "angle.h"
+
+#define FLOW_MAJOR_VERSION (0)
+#define FLOW_MINOR_VERSION (1)
 
 //-----------------------------------------------------------------------------
 int main(int argc, char* const argv[])
@@ -17,10 +21,10 @@ int main(int argc, char* const argv[])
     struct parg_state ps;
     int c;
 
+    printf("flow %d.%d\n\n", FLOW_MAJOR_VERSION, FLOW_MINOR_VERSION);
     if (argc == 1)
     {
-        printf("flow [-h height] [-w width] [-o output_filename]");
-        return -1;
+        printf("usage : flow [-h height] [-w width] [-o output_filename]\n\n");
     }
 
     int output_width = 256;
@@ -37,14 +41,16 @@ int main(int argc, char* const argv[])
         case 'o' : output_filename = ps.optarg; break;
         }
     }
+    
+    printf("ouput %dx%d %s\n", output_width, output_height, output_filename);
 
-    angle_buffer angles;
+    image_buffers buffers;
 
-    init_angle_buffer(&angles, output_height, output_width);
+    init_image_buffers(&buffers, output_height, output_width);
 
-    fill_angle_buffer(&angles, 0, output_height);
+    fill_angle_buffer(&buffers, 0, output_height);
 
-    terminate_angle_buffer(&angles);
+    terminate_image_buffers(&buffers);
 
     return 0;
 }
