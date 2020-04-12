@@ -31,6 +31,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FB20F3BF24434FF900A31A91 /* particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = particle.h; sourceTree = "<group>"; };
 		FB24F1A123F62A1F007BE23D /* Flow */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Flow; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB66DD57242E6BEC0093B249 /* parg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = parg.h; path = src/extern/parg.h; sourceTree = "<group>"; };
 		FB66DD58242E6BED0093B249 /* parg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = parg.c; path = src/extern/parg.c; sourceTree = "<group>"; };
@@ -84,6 +85,7 @@
 		FB24F1A323F62A1F007BE23D /* src */ = {
 			isa = PBXGroup;
 			children = (
+				FB20F3BF24434FF900A31A91 /* particle.h */,
 				FBB26FC224434CD3003A680B /* bucket.c */,
 				FBB26FC124434CD3003A680B /* bucket.h */,
 				FB9DA6B62441FDD7009BE2CB /* image_buffers.h */,

@@ -1,8 +1,7 @@
 #ifndef __BUCKET__H_
 #define __BUCKET__H_
 
-#include "simulation.h"
-
+#include "particle.h"
 
 typedef struct
 {
