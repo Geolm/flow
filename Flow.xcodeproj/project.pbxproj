@@ -14,6 +14,7 @@
 		FB6DEF9623F62C3700B14D70 /* stb_image_write.c in Sources */ = {isa = PBXBuildFile; fileRef = FB6DEF9423F62C3700B14D70 /* stb_image_write.c */; };
 		FB9DA6B82441FDD7009BE2CB /* simulation.c in Sources */ = {isa = PBXBuildFile; fileRef = FB9DA6B72441FDD7009BE2CB /* simulation.c */; };
 		FBA6036724336D7000C69EF3 /* angle.c in Sources */ = {isa = PBXBuildFile; fileRef = FBA6036524336D7000C69EF3 /* angle.c */; };
+		FBB26FC324434CD3003A680B /* bucket.c in Sources */ = {isa = PBXBuildFile; fileRef = FBB26FC224434CD3003A680B /* bucket.c */; };
 		FBC6A78A2433BBFE00C8A07C /* rasterization.c in Sources */ = {isa = PBXBuildFile; fileRef = FBC6A7892433BBFD00C8A07C /* rasterization.c */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +48,8 @@
 		FB9DA6B72441FDD7009BE2CB /* simulation.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = simulation.c; sourceTree = "<group>"; };
 		FBA6036524336D7000C69EF3 /* angle.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = angle.c; sourceTree = "<group>"; };
 		FBA6036624336D7000C69EF3 /* angle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = angle.h; sourceTree = "<group>"; };
+		FBB26FC124434CD3003A680B /* bucket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bucket.h; sourceTree = "<group>"; };
+		FBB26FC224434CD3003A680B /* bucket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bucket.c; sourceTree = "<group>"; };
 		FBC6A7892433BBFD00C8A07C /* rasterization.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rasterization.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -81,6 +84,8 @@
 		FB24F1A323F62A1F007BE23D /* src */ = {
 			isa = PBXGroup;
 			children = (
+				FBB26FC224434CD3003A680B /* bucket.c */,
+				FBB26FC124434CD3003A680B /* bucket.h */,
 				FB9DA6B62441FDD7009BE2CB /* image_buffers.h */,
 				FB9DA6B72441FDD7009BE2CB /* simulation.c */,
 				FB9DA6B52441FDD7009BE2CB /* simulation.h */,
@@ -168,6 +173,7 @@
 			files = (
 				FBC6A78A2433BBFE00C8A07C /* rasterization.c in Sources */,
 				FB66DD59242E6BED0093B249 /* parg.c in Sources */,
+				FBB26FC324434CD3003A680B /* bucket.c in Sources */,
 				FB9DA6B82441FDD7009BE2CB /* simulation.c in Sources */,
 				FB6DEF9523F62C3700B14D70 /* sched.c in Sources */,
 				FB6DEF8C23F62B0900B14D70 /* main.c in Sources */,
