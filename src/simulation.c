@@ -33,6 +33,9 @@ void simulate_particles(image_buffers const* images, float position_step, partic
             p->last_position = p->current_position;
             p->current_position = vec2_add(position, vec2_scale(vec2_angle(angle), position_step));
 
+            // update aabb
+            p->bbox = (aabb) {vec2_min(p->last_position, p->current_position), vec2_max(p->last_position, p->current_position)}; 
+
             // update life
             p->life += p->life_step;
 

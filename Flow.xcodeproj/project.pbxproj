@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB1270912443F893002052D6 /* collision.c in Sources */ = {isa = PBXBuildFile; fileRef = FB12708F2443F893002052D6 /* collision.c */; };
 		FB66DD59242E6BED0093B249 /* parg.c in Sources */ = {isa = PBXBuildFile; fileRef = FB66DD58242E6BED0093B249 /* parg.c */; };
 		FB6DEF8C23F62B0900B14D70 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = FB6DEF8B23F62B0900B14D70 /* main.c */; };
 		FB6DEF9223F62B6B00B14D70 /* stb_perlin.c in Sources */ = {isa = PBXBuildFile; fileRef = FB6DEF9123F62B6B00B14D70 /* stb_perlin.c */; };
@@ -31,6 +32,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FB12708D2443F893002052D6 /* random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = random.h; path = src/extern/random.h; sourceTree = "<group>"; };
+		FB12708E2443F893002052D6 /* color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = color.h; path = src/extern/color.h; sourceTree = "<group>"; };
+		FB12708F2443F893002052D6 /* collision.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = collision.c; path = src/extern/collision.c; sourceTree = "<group>"; };
+		FB1270902443F893002052D6 /* collision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = collision.h; path = src/extern/collision.h; sourceTree = "<group>"; };
 		FB20F3BF24434FF900A31A91 /* particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = particle.h; sourceTree = "<group>"; };
 		FB24F1A123F62A1F007BE23D /* Flow */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Flow; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB66DD57242E6BEC0093B249 /* parg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = parg.h; path = src/extern/parg.h; sourceTree = "<group>"; };
@@ -103,6 +108,10 @@
 		FB6DEF8923F62AF700B14D70 /* extern */ = {
 			isa = PBXGroup;
 			children = (
+				FB12708F2443F893002052D6 /* collision.c */,
+				FB1270902443F893002052D6 /* collision.h */,
+				FB12708E2443F893002052D6 /* color.h */,
+				FB12708D2443F893002052D6 /* random.h */,
 				FB66DD58242E6BED0093B249 /* parg.c */,
 				FB66DD57242E6BEC0093B249 /* parg.h */,
 				FB6DEF9323F62C3700B14D70 /* sched.c */,
@@ -173,6 +182,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB1270912443F893002052D6 /* collision.c in Sources */,
 				FBC6A78A2433BBFE00C8A07C /* rasterization.c in Sources */,
 				FB66DD59242E6BED0093B249 /* parg.c in Sources */,
 				FBB26FC324434CD3003A680B /* bucket.c in Sources */,

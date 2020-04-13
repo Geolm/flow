@@ -2,17 +2,19 @@
 #define __BUCKET__H_
 
 #include "particle.h"
+#include "extern/collision.h"
 
 typedef struct
 {
-    vec2 aabb_min;
-    vec2 aabb_max;
+    aabb bbox;
     int row_start;
     int row_end;
     int particles_count;
+    int max_particles;
     particle* particles;
 } bucket;
 
-void init_buckets(bucket** buckets, int height, int num_buckets, int max_particles);
+void init_buckets(bucket* buckets, int buckets_count, int height, int max_particles);
+void add_particle_to_buckets(bucket* buckets, int buckets_count, particle* particle);
 
 #endif
