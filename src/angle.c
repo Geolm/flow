@@ -12,24 +12,24 @@ static inline float lerp_float(float a, float b, float t)
 }
 
 //-----------------------------------------------------------------------------
-void fill_angle_buffer(image_buffers* buffer, int row_start, int row_end)
+void fill_angle_buffer(image_buffers* image, int row_start, int row_end)
 {
     for(int y=row_start; y<row_end; ++y)
     {
-        float v = (float)y * buffer->y_to_v;
-        for(int x=0; x<buffer->width; ++x)
+        float v = (float)y * image->xy_to_uv.y;
+        for(int x=0; x<image->width; ++x)
         {
-            //float u = (float)x * buffer->x_to_u;
-            buffer->angle_buffer[y * buffer->width + x] = v * angle_pi;
+            //float u = (float)x * image->xy_to_uv.x;
+            image->angle_buffer[y * image->width + x] = v * angle_pi;
         }
     }
 }
 
 //-----------------------------------------------------------------------------
-float fetch_angle_buffer(image_buffers const* buffer, float u, float v)
+float fetch_angle_buffer(image_buffers const* image, float u, float v)
 {
-    float x = u * buffer->width_float;
-    float y = v * buffer->height_float;
+    float x = u * image->width_float;
+    float y = v * image->height_float;
     float x_int, y_int;
     float x_frac, y_frac;
 
@@ -40,23 +40,23 @@ float fetch_angle_buffer(image_buffers const* buffer, float u, float v)
     int pixel_y = (int) y_int;
 
     // do bilinear filtering if not on the edge
-    if (pixel_x < (buffer->width - 1) && pixel_y < (buffer->height - 1))
+    if (pixel_x < (image->width - 1) && pixel_y < (image->height - 1))
     {
         // a b
         // c d
-        int address = pixel_y * buffer->width + pixel_x;
+        int address = pixel_y * image->width + pixel_x;
 
-        float a = buffer->angle_buffer[address];
-        float b = buffer->angle_buffer[address + 1];
-        float c = buffer->angle_buffer[address + buffer->width];
-        float d = buffer->angle_buffer[address + buffer->width + 1];
+        float a = image->angle_buffer[address];
+        float b = image->angle_buffer[address + 1];
+        float c = image->angle_buffer[address + image->width];
+        float d = image->angle_buffer[address + image->width + 1];
 
         return lerp_float(lerp_float(a, b, x_frac), lerp_float(c, d, x_frac), y_frac);
     }
     else
     {
         // otherwise point sampling
-        return buffer->angle_buffer[pixel_y * buffer->width + pixel_x];
+        return image->angle_buffer[pixel_y * image->width + pixel_x];
     }
 }
 

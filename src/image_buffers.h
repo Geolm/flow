@@ -3,14 +3,16 @@
 
 #include <stdint.h>
 #include <stdlib.h>
+#include "extern/vec2.h"
 
 typedef struct 
 {
     int width;
     int height;
     int pixels_count;
-    float x_to_u;
-    float y_to_v;
+    vec2 xy_to_uv;
+    vec2 size;
+    vec2 msaa_uv;
     float width_float;
     float height_float;
     float* angle_buffer;
@@ -18,23 +20,23 @@ typedef struct
 } image_buffers;
 
 //-----------------------------------------------------------------------------
-static inline void init_image_buffers(image_buffers* buffers, int width, int height)
+static inline void init_image_buffers(image_buffers* image, int width, int height)
 {
-    buffers->pixels_count = width * height;
-    buffers->width = width;
-    buffers->height = height;
-    buffers->x_to_u = 1.f / ((float)width - 1);
-    buffers->y_to_v = 1.f / ((float)height - 1);
-
-    buffers->angle_buffer = (float*) malloc(buffers->pixels_count * sizeof(float));
-    buffers->color_buffer = (uint32_t*) malloc(buffers->pixels_count * sizeof(uint32_t));
+    image->pixels_count = width * height;
+    image->width = width;
+    image->height = height;
+    image->size = (vec2) {(float) width , (float) height};
+    image->xy_to_uv = (vec2) {1.f / ((float)width - 1), 1.f / ((float)height - 1)};
+    image->msaa_uv = vec2_scale(image->xy_to_uv, 1.f / 5.f);
+    image->angle_buffer = (float*) malloc(image->pixels_count * sizeof(float));
+    image->color_buffer = (uint32_t*) malloc(image->pixels_count * sizeof(uint32_t));
 }
 
 //-----------------------------------------------------------------------------
-static inline void terminate_image_buffers(image_buffers* buffers)
+static inline void terminate_image_buffers(image_buffers* image)
 {
-    free(buffers->angle_buffer);
-    free(buffers->color_buffer);
+    free(image->angle_buffer);
+    free(image->color_buffer);
 }
 
 #endif // __BUFFERS_H__
