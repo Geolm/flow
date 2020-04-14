@@ -1,4 +1,6 @@
 #include "rasterization.h"
+#include "extern/collision.h"
+#include <math.h>
 
 //-----------------------------------------------------------------------------
 static inline float clamp(float value, float min_value, float max_value)
@@ -69,7 +71,32 @@ float compute_line_opacity(vec2 top_left, vec2 offset_step, vec2 a, vec2 b, floa
 }
 
 //-----------------------------------------------------------------------------
-void rasterize_line(image_buffers *buffer, vec2 p0, vec2 p1, float width, int row_start, int row_end)
+static inline int int_clamp(int value, int value_min, int value_max)
 {
+    if (value > value_max)
+        value = value_max;
+    if (value < value_min)
+        value = value_min;
 
+    return value;
+}
+
+//-----------------------------------------------------------------------------
+void rasterize_line(image_buffers *image, vec2 p0, vec2 p1, float width, int bucket_row_start, int bucket_row_end)
+{
+    // compute bounding box of the line
+    aabb line_aabb = {vec2_min(p0, p1), vec2_max(p0, p1)};
+
+    int column_start = int_clamp((int)floorf((line_aabb.min.x - width) * image->size.x), 0, image->width);
+    int column_end = int_clamp((int)ceilf((line_aabb.max.x + width) * image->size.x), 0, image->width);
+    int row_start = int_clamp((int)floorf((line_aabb.min.y - width) * image->size.y), bucket_row_start, bucket_row_end);
+    int row_end = int_clamp((int)floorf((line_aabb.max.y + width) * image->size.y), bucket_row_start, bucket_row_end);
+    
+    for(int y=row_start; y<row_end; ++y)
+    {
+        for(int x=column_start; x<column_end; ++x)
+        {
+
+        }
+    }
 }
