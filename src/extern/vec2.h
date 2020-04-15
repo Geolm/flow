@@ -48,6 +48,11 @@ static inline vec2 vec2_mul(vec2 a, vec2 b)
     return (vec2){a.x * b.x, a.y * b.y};
 }
 
+static inline vec2 vec2_div(vec2 a, vec2 b)
+{
+    return (vec2){a.x / b.x, a.y / b.y};
+}
+
 static inline float vec2_dot(vec2 a, vec2 b)
 {
     return a.x * b.x + a.y * b.y;

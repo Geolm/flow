@@ -19,7 +19,7 @@ void init_particles(int* random_seed, float life_step, particle* particles, int 
 }
 
 //-----------------------------------------------------------------------------
-void simulate_particles(image_buffers const* images, float position_step, particle* particles, int range_min, int range_max)
+void simulate_particles(image_buffers const* image, float position_step, particle* particles, int range_min, int range_max)
 {
     for(int i=range_min; i<range_max; ++i)
     {
@@ -28,7 +28,7 @@ void simulate_particles(image_buffers const* images, float position_step, partic
         {
             // update position
             vec2 position = p->current_position;
-            float angle = fetch_angle_buffer(images, position.x, position.y);
+            float angle = fetch_angle_buffer(image, position.x, position.y);
 
             p->last_position = p->current_position;
             p->current_position = vec2_add(position, vec2_scale(vec2_angle(angle), position_step));
@@ -40,7 +40,7 @@ void simulate_particles(image_buffers const* images, float position_step, partic
             p->life += p->life_step;
 
             if (vec2_any_less(p->current_position, (vec2) {0.f, 0.f}) || 
-                vec2_any_greater(p->current_position, (vec2) {1.f, 1.f}))
+                vec2_any_greater(p->current_position, image->max_uv))
             {
                 // kill the particle if out of the image
                 p->life = 1.f;
