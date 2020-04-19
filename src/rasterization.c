@@ -94,12 +94,15 @@ static inline int int_clamp(int value, int value_min, int value_max)
 void rasterize_line(image_buffers *image, vec2 p0, vec2 p1, float width, uint32_t color, int bucket_row_start, int bucket_row_end)
 {
     // compute bounding box of the line
-    aabb line_aabb = {vec2_min(p0, p1), vec2_max(p0, p1)};
+    vec2 border = {width, width};
+    aabb shape_aabb = {vec2_min(p0, p1), vec2_max(p0, p1)};
+    shape_aabb.min = vec2_mul(vec2_sub(shape_aabb.min, border), image->uv_to_xy);;
+    shape_aabb.max = vec2_mul(vec2_add(shape_aabb.max, border), image->uv_to_xy);;
 
-    int column_start = int_clamp((int)floorf((line_aabb.min.x - width) * image->size.x), 0, image->width);
-    int column_end = int_clamp((int)ceilf((line_aabb.max.x + width) * image->size.x), 0, image->width);
-    int row_start = int_clamp((int)floorf((line_aabb.min.y - width) * image->size.y), bucket_row_start, bucket_row_end);
-    int row_end = int_clamp((int)floorf((line_aabb.max.y + width) * image->size.y), bucket_row_start, bucket_row_end);
+    int column_start = int_clamp((int)floorf(shape_aabb.min.x), 0, image->width);
+    int column_end = int_clamp((int)ceilf(shape_aabb.max.x), 0, image->width);
+    int row_start = int_clamp((int)floorf(shape_aabb.min.y), bucket_row_start, bucket_row_end);
+    int row_end = int_clamp((int)floorf(shape_aabb.max.y), bucket_row_start, bucket_row_end);
     
     vec2 top_left = {0.f, (float)row_start * image->xy_to_uv.y};
     float squared_width = width * width;
@@ -109,12 +112,46 @@ void rasterize_line(image_buffers *image, vec2 p0, vec2 p1, float width, uint32_
         top_left.x = (float) column_start * image->xy_to_uv.x;
         for(int x=column_start; x<column_end; ++x)
         {
-            int alpha = compute_line_opacity(top_left, image->msaa_uv, p0, p1, squared_width);
+            int alpha = compute_line_opacity(top_left, image->msaa_uv, p0, p1, squared_width) << 4; // mul by 16 since the function returns the number of sample
 
             uint32_t* pixel = &image->color_buffer[y * image->width + x];
 
             *pixel = lerp_RGBA(*pixel, color, alpha);
 
+            top_left.x += image->xy_to_uv.x;
+        }
+
+        top_left.y += image->xy_to_uv.y;
+    }
+}
+
+//-----------------------------------------------------------------------------
+void rasterize_disc(image_buffers *image, vec2 center, float radius, uint32_t color, int bucket_row_start, int bucket_row_end)
+{
+    vec2 extent = {radius, radius};
+    aabb shape_aabb = {vec2_sub(center, extent), vec2_add(center, extent)};
+    shape_aabb.min = vec2_mul(shape_aabb.min, image->uv_to_xy);
+    shape_aabb.max = vec2_mul(shape_aabb.max, image->uv_to_xy);
+    
+    int column_start = int_clamp((int)floorf((shape_aabb.min.x)), 0, image->width);
+    int column_end = int_clamp((int)ceilf((shape_aabb.max.x)), 0, image->width);
+    int row_start = int_clamp((int)floorf((shape_aabb.min.y)), bucket_row_start, bucket_row_end);
+    int row_end = int_clamp((int)floorf((shape_aabb.max.y)), bucket_row_start, bucket_row_end);
+    float squared_radius = radius * radius;
+
+    vec2 top_left = {0.f, (float)row_start * image->xy_to_uv.y};
+    for(int y=row_start; y<row_end; ++y)
+    {
+        top_left.x = (float) column_start * image->xy_to_uv.x;
+        for(int x=column_start; x<column_end; ++x)
+        {
+            int alpha = compute_disc_opacity(top_left, image->msaa_uv, center, squared_radius) << 4; // mul by 16 since the function returns the number of sample
+
+            uint32_t* pixel = &image->color_buffer[y * image->width + x];
+
+            if (alpha)
+                *pixel = lerp_RGBA(*pixel, color, alpha);
+            
             top_left.x += image->xy_to_uv.x;
         }
 

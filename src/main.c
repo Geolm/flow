@@ -53,9 +53,10 @@ int main(int argc, char* const argv[])
     if (run_tests)
     {
         test_clear(&image);
+        test_rasterization(&image);
     }
 
     terminate_image_buffers(&image);
-
+    
     return 0;
 }
