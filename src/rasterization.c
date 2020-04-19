@@ -90,6 +90,12 @@ static inline int int_clamp(int value, int value_min, int value_max)
     return value;
 }
 
+#define COMPUTE_INTEGER_AABB \
+    int column_start = int_clamp((int)floorf(shape_aabb.min.x), 0, image->width); \
+    int column_end = int_clamp((int)ceilf(shape_aabb.max.x), 0, image->width); \
+    int row_start = int_clamp((int)floorf(shape_aabb.min.y), bucket_row_start, bucket_row_end); \
+    int row_end = int_clamp((int)floorf(shape_aabb.max.y), bucket_row_start, bucket_row_end);
+
 //-----------------------------------------------------------------------------
 void rasterize_line(image_buffers *image, vec2 p0, vec2 p1, float width, uint32_t color, int bucket_row_start, int bucket_row_end)
 {
@@ -99,10 +105,7 @@ void rasterize_line(image_buffers *image, vec2 p0, vec2 p1, float width, uint32_
     shape_aabb.min = vec2_mul(vec2_sub(shape_aabb.min, border), image->uv_to_xy);;
     shape_aabb.max = vec2_mul(vec2_add(shape_aabb.max, border), image->uv_to_xy);;
 
-    int column_start = int_clamp((int)floorf(shape_aabb.min.x), 0, image->width);
-    int column_end = int_clamp((int)ceilf(shape_aabb.max.x), 0, image->width);
-    int row_start = int_clamp((int)floorf(shape_aabb.min.y), bucket_row_start, bucket_row_end);
-    int row_end = int_clamp((int)floorf(shape_aabb.max.y), bucket_row_start, bucket_row_end);
+    COMPUTE_INTEGER_AABB;
     
     vec2 top_left = {0.f, (float)row_start * image->xy_to_uv.y};
     float squared_width = width * width;
@@ -133,10 +136,8 @@ void rasterize_disc(image_buffers *image, vec2 center, float radius, uint32_t co
     shape_aabb.min = vec2_mul(shape_aabb.min, image->uv_to_xy);
     shape_aabb.max = vec2_mul(shape_aabb.max, image->uv_to_xy);
     
-    int column_start = int_clamp((int)floorf((shape_aabb.min.x)), 0, image->width);
-    int column_end = int_clamp((int)ceilf((shape_aabb.max.x)), 0, image->width);
-    int row_start = int_clamp((int)floorf((shape_aabb.min.y)), bucket_row_start, bucket_row_end);
-    int row_end = int_clamp((int)floorf((shape_aabb.max.y)), bucket_row_start, bucket_row_end);
+    COMPUTE_INTEGER_AABB;
+    
     float squared_radius = radius * radius;
 
     vec2 top_left = {0.f, (float)row_start * image->xy_to_uv.y};
