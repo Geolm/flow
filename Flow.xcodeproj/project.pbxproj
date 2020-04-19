@@ -17,6 +17,7 @@
 		FBA6036724336D7000C69EF3 /* angle.c in Sources */ = {isa = PBXBuildFile; fileRef = FBA6036524336D7000C69EF3 /* angle.c */; };
 		FBB26FC324434CD3003A680B /* bucket.c in Sources */ = {isa = PBXBuildFile; fileRef = FBB26FC224434CD3003A680B /* bucket.c */; };
 		FBC6A78A2433BBFE00C8A07C /* rasterization.c in Sources */ = {isa = PBXBuildFile; fileRef = FBC6A7892433BBFD00C8A07C /* rasterization.c */; };
+		FBFF6E77244C805600B7FE99 /* test.c in Sources */ = {isa = PBXBuildFile; fileRef = FBFF6E75244C805600B7FE99 /* test.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -57,6 +58,8 @@
 		FBB26FC124434CD3003A680B /* bucket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bucket.h; sourceTree = "<group>"; };
 		FBB26FC224434CD3003A680B /* bucket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bucket.c; sourceTree = "<group>"; };
 		FBC6A7892433BBFD00C8A07C /* rasterization.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rasterization.c; sourceTree = "<group>"; };
+		FBFF6E75244C805600B7FE99 /* test.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test.c; sourceTree = "<group>"; };
+		FBFF6E76244C805600B7FE99 /* test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +93,8 @@
 		FB24F1A323F62A1F007BE23D /* src */ = {
 			isa = PBXGroup;
 			children = (
+				FBFF6E75244C805600B7FE99 /* test.c */,
+				FBFF6E76244C805600B7FE99 /* test.h */,
 				FB20F3BF24434FF900A31A91 /* particle.h */,
 				FBB26FC224434CD3003A680B /* bucket.c */,
 				FBB26FC124434CD3003A680B /* bucket.h */,
@@ -183,6 +188,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB1270912443F893002052D6 /* collision.c in Sources */,
+				FBFF6E77244C805600B7FE99 /* test.c in Sources */,
 				FBC6A78A2433BBFE00C8A07C /* rasterization.c in Sources */,
 				FB66DD59242E6BED0093B249 /* parg.c in Sources */,
 				FBB26FC324434CD3003A680B /* bucket.c in Sources */,
