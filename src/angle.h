@@ -2,8 +2,9 @@
 #define __ANGLE__H_
 
 #include "image_buffers.h"
+#include "extern/vec2.h"
 
 void fill_angle_buffer(image_buffers* image, int row_start, int row_end);
-float fetch_angle_buffer(image_buffers const* image, float u, float v);
+float fetch_angle_buffer(image_buffers const* image, vec2 uv);
 
 #endif // __ANGLE__H_

@@ -28,7 +28,7 @@ void simulate_particles(image_buffers const* image, float position_step, particl
         {
             // update position
             vec2 position = p->current_position;
-            float angle = fetch_angle_buffer(image, position.x, position.y);
+            float angle = fetch_angle_buffer(image, position);
 
             p->last_position = p->current_position;
             p->current_position = vec2_add(position, vec2_scale(vec2_angle(angle), position_step));

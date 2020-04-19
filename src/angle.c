@@ -26,15 +26,14 @@ void fill_angle_buffer(image_buffers* image, int row_start, int row_end)
 }
 
 //-----------------------------------------------------------------------------
-float fetch_angle_buffer(image_buffers const* image, float u, float v)
+float fetch_angle_buffer(image_buffers const* image, vec2 uv)
 {
-    float x = u * image->width_float;
-    float y = v * image->height_float;
+    vec2 xy = vec2_mul(uv, image->uv_to_xy);
     float x_int, y_int;
     float x_frac, y_frac;
 
-    x_frac = modff(x, &x_int);
-    y_frac = modff(y, &y_int);
+    x_frac = modff(xy.x, &x_int);
+    y_frac = modff(xy.y, &y_int);
 
     int pixel_x = (int) x_int;
     int pixel_y = (int) y_int;
