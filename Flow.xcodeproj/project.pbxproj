@@ -60,6 +60,7 @@
 		FBC6A7892433BBFD00C8A07C /* rasterization.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rasterization.c; sourceTree = "<group>"; };
 		FBFF6E75244C805600B7FE99 /* test.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test.c; sourceTree = "<group>"; };
 		FBFF6E76244C805600B7FE99 /* test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test.h; sourceTree = "<group>"; };
+		FBFF6E78244C823000B7FE99 /* palette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = palette.h; path = src/extern/palette.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +114,7 @@
 		FB6DEF8923F62AF700B14D70 /* extern */ = {
 			isa = PBXGroup;
 			children = (
+				FBFF6E78244C823000B7FE99 /* palette.h */,
 				FB12708F2443F893002052D6 /* collision.c */,
 				FB1270902443F893002052D6 /* collision.h */,
 				FB12708E2443F893002052D6 /* color.h */,

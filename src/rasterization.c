@@ -4,6 +4,13 @@
 #include <math.h>
 
 //-----------------------------------------------------------------------------
+void clear_image(image_buffers *image, uint32_t color)
+{
+    for(int i=0; i<image->pixels_count; ++i)
+        image->color_buffer[i] = color;
+}
+
+//-----------------------------------------------------------------------------
 static inline float clamp(float value, float min_value, float max_value)
 {
     return fmin(max_value, fmax(value, min_value));
@@ -114,3 +121,4 @@ void rasterize_line(image_buffers *image, vec2 p0, vec2 p1, float width, uint32_
         top_left.y += image->xy_to_uv.y;
     }
 }
+

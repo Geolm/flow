@@ -28,8 +28,8 @@ int main(int argc, char* const argv[])
         printf("usage : flow [-h height] [-w width] [-o output_filename]\n\n");
     }
 
-    int output_width = 256;
-    int output_height = 256;
+    int output_width = 1600;
+    int output_height = 900;
     const char* output_filename = "output.png";
     bool run_tests = false;
 
@@ -48,11 +48,11 @@ int main(int argc, char* const argv[])
     printf("ouput %dx%d %s\n", output_width, output_height, output_filename);
 
     image_buffers image;
-    init_image_buffers(&image, output_height, output_width);
+    init_image_buffers(&image, output_width, output_height);
 
     if (run_tests)
     {
-        test_rasterization(&image);
+        test_clear(&image);
     }
 
     terminate_image_buffers(&image);
