@@ -28,6 +28,7 @@ int main(int argc, char* const argv[])
     if (argc == 1)
     {
         printf("usage : flow [-h height] [-w width] [-o output_filename]\n\n");
+        return 0;
     }
 
     int output_width = 1600;
@@ -68,6 +69,7 @@ int main(int argc, char* const argv[])
         test_clear(&image);
         test_rasterization(&image);
         test_buckets(&image);
+        test_multithread(&image, &sched);
     }
 
     // terminate
