@@ -10,8 +10,6 @@ void init_buckets(bucket* buckets, int buckets_count, int height, int max_partic
     int height_step = height / buckets_count;
     int row_start = 0; 
 
-    assert(height_step * buckets_count == height);
-
     for(int i=0; i<buckets_count; ++i)
     {
         buckets[i].bbox.min = (vec2) {0.f, v}; v += v_step;
@@ -22,10 +20,21 @@ void init_buckets(bucket* buckets, int buckets_count, int height, int max_partic
         buckets[i].row_start = row_start; row_start += height_step;
         buckets[i].row_end = row_start;
     }
+    
+    buckets[buckets_count-1].row_end = height;
 }
 
 //-----------------------------------------------------------------------------
 void add_particle_to_buckets(bucket* buckets, int buckets_count, particle* particle)
 {
 
+}
+
+//-----------------------------------------------------------------------------
+void terminate_buckets(bucket* buckets, int buckets_count)
+{
+    for(int i=0; i<buckets_count; ++i)
+    {
+        free(buckets[i].particles);
+    }
 }

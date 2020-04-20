@@ -67,6 +67,7 @@ int main(int argc, char* const argv[])
     {
         test_clear(&image);
         test_rasterization(&image);
+        test_buckets(&image);
     }
 
     // terminate
