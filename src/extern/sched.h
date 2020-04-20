@@ -343,62 +343,9 @@ template<typename T> struct sched_alignof{struct Big {T x; char c;}; enum {
 #define SCHEDULER_MAX(a,b) (((a)>(b))?(a):(b))
 
 #ifndef SCHED_MEMSET
-#define SCHED_MEMSET sched_memset
+#include <string.h>
+#define SCHED_MEMSET memset
 #endif
-
-SCHED_INTERN void
-sched_memset(void *ptr, sched_int c0, sched_size size)
-{
-    #define word unsigned
-    #define wsize sizeof(word)
-    #define wmask (wsize - 1)
-    unsigned char *dst = (unsigned char*)ptr;
-    unsigned long long c = 0;
-    sched_size t = 0;
-
-    if ((c = (unsigned char)c0) != 0) {
-        c = (c << 8) | c; /* at least 16-bits  */
-        if (sizeof(unsigned int) > 2)
-            c = (c << 16) | c; /* at least 32-bits*/
-        if (sizeof(unsigned int) > 4)
-            c = (c << 32) | c; /* at least 64-bits*/
-    }
-
-    /* to small of a word count */
-    dst = (unsigned char*)ptr;
-    if (size < 3 * wsize) {
-        while (size--) *dst++ = (unsigned char)c0;
-        return;
-    }
-
-    /* align destination */
-    if ((t = SCHED_PTR_TO_UINT(dst) & wmask) != 0) {
-        t = wsize -t;
-        size -= t;
-        do {
-            *dst++ = (unsigned char)c0;
-        } while (--t != 0);
-    }
-
-    /* fill word */
-    t = size / wsize;
-    do {
-        *(word*)((void*)dst) = c;
-        dst += wsize;
-    } while (--t != 0);
-
-    /* fill trailing bytes */
-    t = (size & wmask);
-    if (t != 0) {
-        do {
-            *dst++ = (unsigned char)c0;
-        } while (--t != 0);
-    }
-
-    #undef word
-    #undef wsize
-    #undef wmask
-}
 
 #define sched_zero_struct(s) sched_zero_size(&s, sizeof(s))
 #define sched_zero_array(p,n) sched_zero_size(p, (n) * sizeof((p)[0]))

@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "extern/sched.h"
 #include "parg.h"
 #include "image_buffers.h"
 #include "angle.h"
@@ -22,6 +23,7 @@ int main(int argc, char* const argv[])
     struct parg_state ps;
     int c;
 
+    // argument parsing
     printf("flow %d.%d\n\n", FLOW_MAJOR_VERSION, FLOW_MINOR_VERSION);
     if (argc == 1)
     {
@@ -47,8 +49,19 @@ int main(int argc, char* const argv[])
     
     printf("ouput %dx%d %s\n", output_width, output_height, output_filename);
 
+
+    // scheduler initialization
+    void *sched_memory;
+    sched_size needed_memory;
+    struct scheduler sched;
+    scheduler_init(&sched, &needed_memory, SCHED_DEFAULT, 0);
+    sched_memory = malloc(needed_memory); 
+    scheduler_start(&sched, sched_memory);
+
+    // init image buffers
     image_buffers image;
     init_image_buffers(&image, output_width, output_height);
+
 
     if (run_tests)
     {
@@ -56,7 +69,10 @@ int main(int argc, char* const argv[])
         test_rasterization(&image);
     }
 
+    // terminate
     terminate_image_buffers(&image);
+    scheduler_stop(&sched, 1);
+    free(sched_memory);
     
     return 0;
 }
