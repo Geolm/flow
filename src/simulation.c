@@ -3,7 +3,7 @@
 #include "extern/random.h"
 
 //-----------------------------------------------------------------------------
-void init_particles(int* random_seed, float life_step, particle* particles, int range_min, int range_max)
+static void init_particles_range(int* random_seed, float life_step, particle* particles, int range_min, int range_max)
 {
     float random_step_part = life_step * 0.01f;
     for(int i=range_min; i<range_max; ++i)
@@ -19,7 +19,7 @@ void init_particles(int* random_seed, float life_step, particle* particles, int 
 }
 
 //-----------------------------------------------------------------------------
-void simulate_particles(image_buffers const* image, float position_step, particle* particles, int range_min, int range_max)
+static void simulate_particles_range(image_buffers const* image, float position_step, particle* particles, int range_min, int range_max)
 {
     for(int i=range_min; i<range_max; ++i)
     {
@@ -33,9 +33,6 @@ void simulate_particles(image_buffers const* image, float position_step, particl
             p->last_position = p->current_position;
             p->current_position = vec2_add(position, vec2_scale(vec2_angle(angle), position_step));
 
-            // update aabb
-            p->bbox = (aabb) {vec2_min(p->last_position, p->current_position), vec2_max(p->last_position, p->current_position)}; 
-
             // update life
             p->life += p->life_step;
 
@@ -47,4 +44,32 @@ void simulate_particles(image_buffers const* image, float position_step, particl
             }
         }
     }
+}
+
+//-----------------------------------------------------------------------------
+typedef struct 
+{
+    image_buffers const* image;
+    int* random_seed;
+    float life_step;
+    particle* particles;
+} init_task_data;
+
+typedef struct 
+{
+    image_buffers const* image;
+    float position_step;
+    particle* particles;
+} update_task_data;
+
+//-----------------------------------------------------------------------------
+void init_particles(struct scheduler* sched, int* random_seed, float life_step, particle* particles, int particles_count)
+{
+
+}
+
+//-----------------------------------------------------------------------------
+void simulate_particles(struct scheduler* sched, image_buffers const* images, float position_step, particle* particles, int particles_count)
+{
+
 }
