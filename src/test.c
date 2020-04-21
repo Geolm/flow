@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <stdio.h>
 #include "extern/stb_image_write.h"
 #include "extern/palette.h"
 #include "test.h"
@@ -15,6 +16,8 @@ void test_clear(image_buffers* image)
 
     assert(result != 0);
     assert(image->color_buffer[237] == na16_light_grey);
+    
+    printf(".");
 }
 
 //-----------------------------------------------------------------------------
@@ -26,6 +29,8 @@ void test_rasterization(image_buffers* image)
     int result = stbi_write_png("test_rasterization.png", image->width, image->height, 4, image->color_buffer, sizeof(uint32_t) * image->width);
 
     assert(result != 0);
+    
+    printf(".");
 }
 
 //-----------------------------------------------------------------------------
@@ -48,10 +53,12 @@ void test_buckets(image_buffers* image)
     int result = stbi_write_png("test_buckets.png", image->width, image->height, 4, image->color_buffer, sizeof(uint32_t) * image->width);
 
     assert(result != 0);
+    
+    printf(".");
 }
 
 //-----------------------------------------------------------------------------
 void test_multithread(image_buffers* image, struct scheduler* sched)
 {
-
+    printf(".");
 }

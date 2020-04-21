@@ -66,10 +66,12 @@ int main(int argc, char* const argv[])
 
     if (run_tests)
     {
+        printf("running tests ");
         test_clear(&image);
         test_rasterization(&image);
         test_buckets(&image);
         test_multithread(&image, &sched);
+        printf(" done\n");
     }
 
     // terminate
