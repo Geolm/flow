@@ -67,7 +67,10 @@ typedef struct
 //-----------------------------------------------------------------------------
 void rasterization_task(void *pArg, struct scheduler *s, struct sched_task_partition p, sched_uint thread_num)
 {
-
+    rasterization_task_data* data = (rasterization_task_data*) pArg;
+    image_buffers* image = data->image;
+    bucket* b = data->image_bucket;
+    rasterize_line(image, (vec2) {0.f, 0.f}, (vec2) {1.0f, 0.5f}, 0.001f, na16_light_green, b->row_start, b->row_end);
 }
 
 //-----------------------------------------------------------------------------
