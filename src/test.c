@@ -58,7 +58,43 @@ void test_buckets(image_buffers* image)
 }
 
 //-----------------------------------------------------------------------------
+typedef struct 
+{
+    image_buffers* image;
+    bucket* image_bucket;
+} rasterization_task_data;
+
+//-----------------------------------------------------------------------------
+void rasterization_task(void *pArg, struct scheduler *s, struct sched_task_partition p, sched_uint thread_num)
+{
+
+}
+
+//-----------------------------------------------------------------------------
 void test_multithread(image_buffers* image, struct scheduler* sched)
 {
+    bucket buckets[NUM_BUCKETS];
+    struct sched_task tasks[NUM_BUCKETS];
+    rasterization_task_data data[NUM_BUCKETS];
+
+    init_buckets(buckets, NUM_BUCKETS, image->height, 1000);
+
+    for(int i=0; i<NUM_BUCKETS; ++i)
+    {
+        data[i].image = image;
+        data[i].image_bucket = &buckets[i];
+
+        scheduler_add(sched, &tasks[i], rasterization_task, &data[i], 1, 1);
+    }
+    
+    for(int i=0; i<NUM_BUCKETS; ++i)
+    {
+        scheduler_join(sched, &tasks[i]);
+    }
+
+    int result = stbi_write_png("test_multithread.png", image->width, image->height, 4, image->color_buffer, sizeof(uint32_t) * image->width);
+
+    assert(result != 0);
+
     printf(".");
 }
