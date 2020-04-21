@@ -89,11 +89,8 @@ void test_multithread(image_buffers* image, struct scheduler* sched)
 
         scheduler_add(sched, &tasks[i], rasterization_task, &data[i], 1, 1);
     }
-    
-    for(int i=0; i<NUM_BUCKETS; ++i)
-    {
-        scheduler_join(sched, &tasks[i]);
-    }
+
+    scheduler_wait(sched);
 
     int result = stbi_write_png("test_multithread.png", image->width, image->height, 4, image->color_buffer, sizeof(uint32_t) * image->width);
 

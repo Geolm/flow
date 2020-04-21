@@ -33,11 +33,9 @@ int get_disc_samples_count(vec2 top_left, vec2 offset_step, vec2 center, float s
         for(int x=0; x<4; ++x)
         {            
             vec2 sample_position = vec2_add(top_left, offset);
-            
             if (vec2_sq_distance(sample_position, center) < squared_distance)
-            {
                 samples_count++;
-            }
+            
             offset.x += offset_step.x;
         }
         offset.y += offset_step.y;
@@ -67,11 +65,8 @@ int get_line_samples_count(vec2 top_left, vec2 offset_step, vec2 a, vec2 b, floa
         for(int x=0; x<4; ++x)
         {            
             vec2 sample_position = vec2_add(top_left, offset);
-            
             if (line_sq_distance(sample_position, a, b) < squared_width)
-            {
                 samples_count++;
-            }            
             offset.x += offset_step.x;
         }
         offset.y += offset_step.y;
@@ -90,11 +85,8 @@ int get_triangle_samples_count(vec2 top_left, vec2 offset_step, vec2 a, vec2 b, 
         for(int x=0; x<4; ++x)
         {            
             vec2 sample_position = vec2_add(top_left, offset);
-            
             if (test_point_triangle(a, b, c, sample_position))
-            {
                 samples_count++;
-            }            
             offset.x += offset_step.x;
         }
         offset.y += offset_step.y;
@@ -114,6 +106,8 @@ static inline int int_clamp(int value, int value_min, int value_max)
 }
 
 #define COMPUTE_INTEGER_AABB \
+    shape_aabb.min = vec2_mul(shape_aabb.min, image->uv_to_xy); \
+    shape_aabb.max = vec2_mul(shape_aabb.max, image->uv_to_xy); \
     int column_start = int_clamp((int)floorf(shape_aabb.min.x), 0, image->width); \
     int column_end = int_clamp((int)ceilf(shape_aabb.max.x), 0, image->width); \
     int row_start = int_clamp((int)floorf(shape_aabb.min.y), bucket_row_start, bucket_row_end); \
@@ -125,8 +119,8 @@ void rasterize_line(image_buffers *image, vec2 p0, vec2 p1, float width, uint32_
     // compute bounding box of the line
     vec2 border = {width, width};
     aabb shape_aabb = {vec2_min(p0, p1), vec2_max(p0, p1)};
-    shape_aabb.min = vec2_mul(vec2_sub(shape_aabb.min, border), image->uv_to_xy);;
-    shape_aabb.max = vec2_mul(vec2_add(shape_aabb.max, border), image->uv_to_xy);;
+    shape_aabb.min = vec2_sub(shape_aabb.min, border);
+    shape_aabb.max = vec2_add(shape_aabb.max, border);
 
     COMPUTE_INTEGER_AABB;
     
@@ -154,8 +148,6 @@ void rasterize_disc(image_buffers *image, vec2 center, float radius, uint32_t co
 {
     vec2 extent = {radius, radius};
     aabb shape_aabb = {vec2_sub(center, extent), vec2_add(center, extent)};
-    shape_aabb.min = vec2_mul(shape_aabb.min, image->uv_to_xy);
-    shape_aabb.max = vec2_mul(shape_aabb.max, image->uv_to_xy);
     
     COMPUTE_INTEGER_AABB;
     
@@ -181,8 +173,6 @@ void rasterize_disc(image_buffers *image, vec2 center, float radius, uint32_t co
 void rasterize_triangle(image_buffers *image, vec2 a, vec2 b, vec2 c, uint32_t color, int bucket_row_start, int bucket_row_end)
 {
     aabb shape_aabb = {vec2_min(a, vec2_min(b, c)), vec2_max(a, vec2_max(b, c)) };
-    shape_aabb.min = vec2_mul(shape_aabb.min, image->uv_to_xy);
-    shape_aabb.max = vec2_mul(shape_aabb.max, image->uv_to_xy);
     
     COMPUTE_INTEGER_AABB;
 
