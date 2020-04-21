@@ -22,10 +22,10 @@ static inline float clamp(float value, float min_value, float max_value)
 // top_left of the pixel (uv)
 // offset_step is 1/5 of pixel (uv)
 // squared_distance if the function returns below that the sample is considered opaque
-// returns opacity between 0 and 16
-int compute_disc_opacity(vec2 top_left, vec2 offset_step, vec2 center, float squared_distance)
+// returns samples_count between 0 and 16
+int get_disc_samples_count(vec2 top_left, vec2 offset_step, vec2 center, float squared_distance)
 {
-    int opacity = 0;
+    int samples_count = 0;
     vec2 offset = offset_step;
     for(int y=0; y<4; ++y)  
     {
@@ -36,13 +36,13 @@ int compute_disc_opacity(vec2 top_left, vec2 offset_step, vec2 center, float squ
             
             if (vec2_sq_distance(sample_position, center) < squared_distance)
             {
-                opacity++;
+                samples_count++;
             }
             offset.x += offset_step.x;
         }
         offset.y += offset_step.y;
     }
-    return opacity;
+    return samples_count;
 }
 
 //-----------------------------------------------------------------------------
@@ -57,9 +57,9 @@ inline static float line_sq_distance(vec2 sample_position, vec2 a, vec2 b)
 
 //-----------------------------------------------------------------------------
 // kind of copy/paste from the previous function, template? ;)
-int compute_line_opacity(vec2 top_left, vec2 offset_step, vec2 a, vec2 b, float squared_width)
+int get_line_samples_count(vec2 top_left, vec2 offset_step, vec2 a, vec2 b, float squared_width)
 {
-    int opacity = 0;
+    int samples_count = 0;
     vec2 offset = offset_step;
     for(int y=0; y<4; ++y)  
     {
@@ -70,13 +70,36 @@ int compute_line_opacity(vec2 top_left, vec2 offset_step, vec2 a, vec2 b, float 
             
             if (line_sq_distance(sample_position, a, b) < squared_width)
             {
-                opacity++;
+                samples_count++;
             }            
             offset.x += offset_step.x;
         }
         offset.y += offset_step.y;
     }
-    return opacity;
+    return samples_count;
+}
+
+//-----------------------------------------------------------------------------
+int get_triangle_samples_count(vec2 top_left, vec2 offset_step, vec2 a, vec2 b, vec2 c)
+{
+    int samples_count = 0;
+    vec2 offset = offset_step;
+    for(int y=0; y<4; ++y)  
+    {
+        offset.x = offset_step.x;
+        for(int x=0; x<4; ++x)
+        {            
+            vec2 sample_position = vec2_add(top_left, offset);
+            
+            if (test_point_triangle(a, b, c, sample_position))
+            {
+                samples_count++;
+            }            
+            offset.x += offset_step.x;
+        }
+        offset.y += offset_step.y;
+    }
+    return samples_count;
 }
 
 //-----------------------------------------------------------------------------
@@ -115,15 +138,13 @@ void rasterize_line(image_buffers *image, vec2 p0, vec2 p1, float width, uint32_
         top_left.x = (float) column_start * image->xy_to_uv.x;
         for(int x=column_start; x<column_end; ++x)
         {
-            int alpha = compute_line_opacity(top_left, image->msaa_uv, p0, p1, squared_width) << 4; // mul by 16 since the function returns the number of sample
-
+            // mul by 16 since the function returns the number of samples
+            int alpha = get_line_samples_count(top_left, image->msaa_uv, p0, p1, squared_width) << 4; 
             uint32_t* pixel = &image->color_buffer[y * image->width + x];
-
-            *pixel = lerp_RGBA(*pixel, color, alpha);
-
+            if (alpha)
+                *pixel = lerp_RGBA(*pixel, color, alpha);
             top_left.x += image->xy_to_uv.x;
         }
-
         top_left.y += image->xy_to_uv.y;
     }
 }
@@ -146,17 +167,37 @@ void rasterize_disc(image_buffers *image, vec2 center, float radius, uint32_t co
         top_left.x = (float) column_start * image->xy_to_uv.x;
         for(int x=column_start; x<column_end; ++x)
         {
-            int alpha = compute_disc_opacity(top_left, image->msaa_uv, center, squared_radius) << 4; // mul by 16 since the function returns the number of sample
-
+            int alpha = get_disc_samples_count(top_left, image->msaa_uv, center, squared_radius) << 4;
             uint32_t* pixel = &image->color_buffer[y * image->width + x];
-
             if (alpha)
                 *pixel = lerp_RGBA(*pixel, color, alpha);
-            
             top_left.x += image->xy_to_uv.x;
         }
-
         top_left.y += image->xy_to_uv.y;
     }
 }
 
+//-----------------------------------------------------------------------------
+void rasterize_triangle(image_buffers *image, vec2 a, vec2 b, vec2 c, uint32_t color, int bucket_row_start, int bucket_row_end)
+{
+    aabb shape_aabb = {vec2_min(a, vec2_min(b, c)), vec2_max(a, vec2_max(b, c)) };
+    shape_aabb.min = vec2_mul(shape_aabb.min, image->uv_to_xy);
+    shape_aabb.max = vec2_mul(shape_aabb.max, image->uv_to_xy);
+    
+    COMPUTE_INTEGER_AABB;
+
+    vec2 top_left = {0.f, (float)row_start * image->xy_to_uv.y};
+    for(int y=row_start; y<row_end; ++y)
+    {
+        top_left.x = (float) column_start * image->xy_to_uv.x;
+        for(int x=column_start; x<column_end; ++x)
+        {
+            int alpha = get_triangle_samples_count(top_left, image->msaa_uv, a, b, c) << 4;
+            uint32_t* pixel = &image->color_buffer[y * image->width + x];
+            if (alpha)
+                *pixel = lerp_RGBA(*pixel, color, alpha);
+            top_left.x += image->xy_to_uv.x;
+        }
+        top_left.y += image->xy_to_uv.y;
+    }
+}
