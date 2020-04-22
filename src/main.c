@@ -27,23 +27,25 @@ int main(int argc, char* const argv[])
     printf("flow %d.%d\n\n", FLOW_MAJOR_VERSION, FLOW_MINOR_VERSION);
     if (argc == 1)
     {
-        printf("usage : flow [-h height] [-w width] [-o output_filename]\n\n");
+        printf("usage : flow [-h height] [-w width] [-o output_filename] [-q quality_level 1-16]\n\n");
         return 0;
     }
 
     int output_width = 1600;
     int output_height = 900;
+    int horizontal_samples_count = 4;
     const char* output_filename = "output.png";
     bool run_tests = false;
 
     parg_init(&ps);
-    while ((c = parg_getopt(&ps, argc, argv, "whot")) != -1) 
+    while ((c = parg_getopt(&ps, argc, argv, "w:sh:so:stq:s")) != -1)
     {
 		switch (c) 
         {
         case 'w' : output_width = atoi(ps.optarg); break;
         case 'h' : output_height = atoi(ps.optarg); break;
         case 'o' : output_filename = ps.optarg; break;
+        case 'q' : horizontal_samples_count = atoi(ps.optarg); break;
         case 't' : run_tests = true; break;
         }
     }
@@ -61,7 +63,7 @@ int main(int argc, char* const argv[])
 
     // init image buffers
     image_buffers image;
-    init_image_buffers(&image, output_width, output_height);
+    init_image_buffers(&image, output_width, output_height, horizontal_samples_count);
 
 
     if (run_tests)

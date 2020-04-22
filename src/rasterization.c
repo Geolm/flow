@@ -23,14 +23,14 @@ static inline float clamp(float value, float min_value, float max_value)
 // offset_step is 1/5 of pixel (uv)
 // squared_distance if the function returns below that the sample is considered opaque
 // returns samples_count between 0 and 16
-int get_disc_samples_count(vec2 top_left, vec2 offset_step, vec2 center, float squared_distance)
+static int get_disc_samples_count(vec2 top_left, vec2 offset_step, int max_samples, vec2 center, float squared_distance)
 {
     int samples_count = 0;
     vec2 offset = offset_step;
-    for(int y=0; y<4; ++y)  
+    for(int y=0; y<max_samples; ++y)  
     {
         offset.x = offset_step.x;
-        for(int x=0; x<4; ++x)
+        for(int x=0; x<max_samples; ++x)
         {            
             vec2 sample_position = vec2_add(top_left, offset);
             if (vec2_sq_distance(sample_position, center) < squared_distance)
@@ -55,14 +55,14 @@ inline static float line_sq_distance(vec2 sample_position, vec2 a, vec2 b)
 
 //-----------------------------------------------------------------------------
 // kind of copy/paste from the previous function, template? ;)
-int get_line_samples_count(vec2 top_left, vec2 offset_step, vec2 a, vec2 b, float squared_width)
+static int get_line_samples_count(vec2 top_left, vec2 offset_step, int max_samples, vec2 a, vec2 b, float squared_width)
 {
     int samples_count = 0;
     vec2 offset = offset_step;
-    for(int y=0; y<4; ++y)  
+    for(int y=0; y<max_samples; ++y)  
     {
         offset.x = offset_step.x;
-        for(int x=0; x<4; ++x)
+        for(int x=0; x<max_samples; ++x)
         {            
             vec2 sample_position = vec2_add(top_left, offset);
             if (line_sq_distance(sample_position, a, b) < squared_width)
@@ -75,14 +75,14 @@ int get_line_samples_count(vec2 top_left, vec2 offset_step, vec2 a, vec2 b, floa
 }
 
 //-----------------------------------------------------------------------------
-int get_triangle_samples_count(vec2 top_left, vec2 offset_step, vec2 a, vec2 b, vec2 c)
+static int get_triangle_samples_count(vec2 top_left, vec2 offset_step, int max_samples, vec2 a, vec2 b, vec2 c)
 {
     int samples_count = 0;
     vec2 offset = offset_step;
-    for(int y=0; y<4; ++y)  
+    for(int y=0; y<max_samples; ++y)  
     {
         offset.x = offset_step.x;
-        for(int x=0; x<4; ++x)
+        for(int x=0; x<max_samples; ++x)
         {            
             vec2 sample_position = vec2_add(top_left, offset);
             if (test_point_triangle(a, b, c, sample_position))
@@ -116,7 +116,8 @@ static inline int int_clamp(int value, int value_min, int value_max)
 //-----------------------------------------------------------------------------
 void rasterize_line(image_buffers *image, vec2 p0, vec2 p1, float width, uint32_t color, int bucket_row_start, int bucket_row_end)
 {
-    // compute bounding box of the line
+    int max_samples_squared = image->max_samples * image->max_samples;
+
     vec2 border = {width, width};
     aabb shape_aabb = {vec2_min(p0, p1), vec2_max(p0, p1)};
     shape_aabb.min = vec2_sub(shape_aabb.min, border);
@@ -132,8 +133,8 @@ void rasterize_line(image_buffers *image, vec2 p0, vec2 p1, float width, uint32_
         top_left.x = (float) column_start * image->xy_to_uv.x;
         for(int x=column_start; x<column_end; ++x)
         {
-            // mul by 16 since the function returns the number of samples
-            int alpha = get_line_samples_count(top_left, image->msaa_uv, p0, p1, squared_width) << 4; 
+            int samples_count = get_line_samples_count(top_left, image->msaa_uv, image->max_samples, p0, p1, squared_width); 
+            int alpha = (samples_count << 8) / max_samples_squared;
             uint32_t* pixel = &image->color_buffer[y * image->width + x];
             if (alpha)
                 *pixel = lerp_RGBA(*pixel, color, alpha);
@@ -146,6 +147,7 @@ void rasterize_line(image_buffers *image, vec2 p0, vec2 p1, float width, uint32_
 //-----------------------------------------------------------------------------
 void rasterize_disc(image_buffers *image, vec2 center, float radius, uint32_t color, int bucket_row_start, int bucket_row_end)
 {
+    int max_samples_squared = image->max_samples * image->max_samples;
     vec2 extent = {radius, radius};
     aabb shape_aabb = {vec2_sub(center, extent), vec2_add(center, extent)};
     
@@ -159,7 +161,8 @@ void rasterize_disc(image_buffers *image, vec2 center, float radius, uint32_t co
         top_left.x = (float) column_start * image->xy_to_uv.x;
         for(int x=column_start; x<column_end; ++x)
         {
-            int alpha = get_disc_samples_count(top_left, image->msaa_uv, center, squared_radius) << 4;
+            int samples_count = get_disc_samples_count(top_left, image->msaa_uv, image->max_samples, center, squared_radius);
+            int alpha = (samples_count << 8) / max_samples_squared;
             uint32_t* pixel = &image->color_buffer[y * image->width + x];
             if (alpha)
                 *pixel = lerp_RGBA(*pixel, color, alpha);
@@ -172,6 +175,7 @@ void rasterize_disc(image_buffers *image, vec2 center, float radius, uint32_t co
 //-----------------------------------------------------------------------------
 void rasterize_triangle(image_buffers *image, vec2 a, vec2 b, vec2 c, uint32_t color, int bucket_row_start, int bucket_row_end)
 {
+    int max_samples_squared = image->max_samples * image->max_samples;
     aabb shape_aabb = {vec2_min(a, vec2_min(b, c)), vec2_max(a, vec2_max(b, c)) };
     
     COMPUTE_INTEGER_AABB;
@@ -182,7 +186,8 @@ void rasterize_triangle(image_buffers *image, vec2 a, vec2 b, vec2 c, uint32_t c
         top_left.x = (float) column_start * image->xy_to_uv.x;
         for(int x=column_start; x<column_end; ++x)
         {
-            int alpha = get_triangle_samples_count(top_left, image->msaa_uv, a, b, c) << 4;
+            int samples_count = get_triangle_samples_count(top_left, image->msaa_uv, image->max_samples, a, b, c);
+            int alpha = (samples_count << 8) / max_samples_squared;
             uint32_t* pixel = &image->color_buffer[y * image->width + x];
             if (alpha)
                 *pixel = lerp_RGBA(*pixel, color, alpha);

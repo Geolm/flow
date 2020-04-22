@@ -10,6 +10,7 @@ typedef struct
     int width;
     int height;
     int pixels_count;
+    int max_samples;
     vec2 xy_to_uv;
     vec2 uv_to_xy;
     vec2 size;
@@ -22,11 +23,12 @@ typedef struct
 } image_buffers;
 
 //-----------------------------------------------------------------------------
-static inline void init_image_buffers(image_buffers* image, int width, int height)
+static inline void init_image_buffers(image_buffers* image, int width, int height, int max_samples)
 {
     image->pixels_count = width * height;
     image->width = width;
     image->height = height;
+    image->max_samples = max_samples;
     image->size = (vec2) {(float) width , (float) height};
 
     if (image->size.x > image->size.y)
@@ -36,7 +38,7 @@ static inline void init_image_buffers(image_buffers* image, int width, int heigh
 
     image->xy_to_uv = vec2_div(image->max_uv, (vec2) {(float)width - 1,(float)height - 1});
     image->uv_to_xy = vec2_div((vec2) {1.f, 1.f}, image->xy_to_uv);
-    image->msaa_uv = vec2_scale(image->xy_to_uv, 1.f / 5.f);
+    image->msaa_uv = vec2_scale(image->xy_to_uv, 1.f / (float) (max_samples+1));
     image->angle_buffer = (float*) malloc(image->pixels_count * sizeof(float));
     image->color_buffer = (uint32_t*) malloc(image->pixels_count * sizeof(uint32_t));
 }
