@@ -6,7 +6,7 @@
 #include "extern/sched.h"
 
 //-----------------------------------------------------------------------------
-void init_particles(struct scheduler* sched, int* random_seed, float life_step, particle* particles, int particles_count);
+void init_particles(struct scheduler* sched, image_buffers const* images, int* random_seed, float life_step, particle* particles, int particles_count);
 void simulate_particles(struct scheduler* sched, image_buffers const* images, float position_step, particle* particles, int particles_count);
 
 
