@@ -17,6 +17,7 @@
 		FBA6036724336D7000C69EF3 /* angle.c in Sources */ = {isa = PBXBuildFile; fileRef = FBA6036524336D7000C69EF3 /* angle.c */; };
 		FBB26FC324434CD3003A680B /* bucket.c in Sources */ = {isa = PBXBuildFile; fileRef = FBB26FC224434CD3003A680B /* bucket.c */; };
 		FBBEBCF22450BD97001D38EE /* config.c in Sources */ = {isa = PBXBuildFile; fileRef = FBBEBCF12450BD97001D38EE /* config.c */; };
+		FBBEBCF52450C343001D38EE /* flow.c in Sources */ = {isa = PBXBuildFile; fileRef = FBBEBCF32450C343001D38EE /* flow.c */; };
 		FBC6A78A2433BBFE00C8A07C /* rasterization.c in Sources */ = {isa = PBXBuildFile; fileRef = FBC6A7892433BBFD00C8A07C /* rasterization.c */; };
 		FBFF6E77244C805600B7FE99 /* test.c in Sources */ = {isa = PBXBuildFile; fileRef = FBFF6E75244C805600B7FE99 /* test.c */; };
 /* End PBXBuildFile section */
@@ -60,6 +61,8 @@
 		FBB26FC224434CD3003A680B /* bucket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bucket.c; sourceTree = "<group>"; };
 		FBBEBCF02450BBDC001D38EE /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		FBBEBCF12450BD97001D38EE /* config.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = config.c; sourceTree = "<group>"; };
+		FBBEBCF32450C343001D38EE /* flow.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = flow.c; sourceTree = "<group>"; };
+		FBBEBCF42450C343001D38EE /* flow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = flow.h; sourceTree = "<group>"; };
 		FBC6A7892433BBFD00C8A07C /* rasterization.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rasterization.c; sourceTree = "<group>"; };
 		FBFF6E75244C805600B7FE99 /* test.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test.c; sourceTree = "<group>"; };
 		FBFF6E76244C805600B7FE99 /* test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test.h; sourceTree = "<group>"; };
@@ -97,6 +100,8 @@
 		FB24F1A323F62A1F007BE23D /* src */ = {
 			isa = PBXGroup;
 			children = (
+				FBBEBCF32450C343001D38EE /* flow.c */,
+				FBBEBCF42450C343001D38EE /* flow.h */,
 				FBBEBCF12450BD97001D38EE /* config.c */,
 				FBBEBCF02450BBDC001D38EE /* config.h */,
 				FBFF6E75244C805600B7FE99 /* test.c */,
@@ -194,6 +199,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBBEBCF52450C343001D38EE /* flow.c in Sources */,
 				FB1270912443F893002052D6 /* collision.c in Sources */,
 				FBFF6E77244C805600B7FE99 /* test.c in Sources */,
 				FBC6A78A2433BBFE00C8A07C /* rasterization.c in Sources */,
