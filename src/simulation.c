@@ -79,7 +79,7 @@ void init_particles(struct scheduler* sched, image_buffers const* image, int* ra
 }
 
 //-----------------------------------------------------------------------------
-void simulate_particles(struct scheduler* sched, image_buffers const* image, float position_step, particle* particles, int particles_count)
+void update_particles(struct scheduler* sched, image_buffers const* image, float position_step, particle* particles, int particles_count)
 {
     update_task_data data = {image, position_step, particles};
     struct sched_task task;

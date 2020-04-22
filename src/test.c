@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "extern/stb_image_write.h"
 #include "extern/palette.h"
 #include "test.h"
@@ -96,5 +97,21 @@ void test_multithread(image_buffers* image, struct scheduler* sched)
 
     assert(result != 0);
 
+    printf(".");
+}
+
+
+//-----------------------------------------------------------------------------
+#define NUM_PARTICLES (800*450)
+void test_simulation(image_buffers* image, struct scheduler* sched)
+{
+    particle* particles = (particle*) malloc(sizeof(particle) * NUM_PARTICLES);
+    int seed = 0x12345678;
+
+    init_particles(sched, image, &seed, 0.01f, particles, NUM_PARTICLES);
+    update_particles(sched, image, 0.01f, particles, NUM_PARTICLES);
+
+    free(particles);
+    
     printf(".");
 }

@@ -9,5 +9,6 @@ void test_clear(image_buffers* image);
 void test_rasterization(image_buffers* image);
 void test_buckets(image_buffers* image);
 void test_multithread(image_buffers* image, struct scheduler* sched);
+void test_simulation(image_buffers* image, struct scheduler* sched);
 
 #endif

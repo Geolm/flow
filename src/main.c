@@ -71,6 +71,7 @@ int main(int argc, char* const argv[])
         test_rasterization(&image);
         test_buckets(&image);
         test_multithread(&image, &sched);
+        test_simulation(&image, &sched);
         printf(" done\n");
     }
 
