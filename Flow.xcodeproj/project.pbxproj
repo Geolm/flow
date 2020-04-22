@@ -16,6 +16,7 @@
 		FB9DA6B82441FDD7009BE2CB /* simulation.c in Sources */ = {isa = PBXBuildFile; fileRef = FB9DA6B72441FDD7009BE2CB /* simulation.c */; };
 		FBA6036724336D7000C69EF3 /* angle.c in Sources */ = {isa = PBXBuildFile; fileRef = FBA6036524336D7000C69EF3 /* angle.c */; };
 		FBB26FC324434CD3003A680B /* bucket.c in Sources */ = {isa = PBXBuildFile; fileRef = FBB26FC224434CD3003A680B /* bucket.c */; };
+		FBBEBCF22450BD97001D38EE /* config.c in Sources */ = {isa = PBXBuildFile; fileRef = FBBEBCF12450BD97001D38EE /* config.c */; };
 		FBC6A78A2433BBFE00C8A07C /* rasterization.c in Sources */ = {isa = PBXBuildFile; fileRef = FBC6A7892433BBFD00C8A07C /* rasterization.c */; };
 		FBFF6E77244C805600B7FE99 /* test.c in Sources */ = {isa = PBXBuildFile; fileRef = FBFF6E75244C805600B7FE99 /* test.c */; };
 /* End PBXBuildFile section */
@@ -57,6 +58,8 @@
 		FBA6036624336D7000C69EF3 /* angle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = angle.h; sourceTree = "<group>"; };
 		FBB26FC124434CD3003A680B /* bucket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bucket.h; sourceTree = "<group>"; };
 		FBB26FC224434CD3003A680B /* bucket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bucket.c; sourceTree = "<group>"; };
+		FBBEBCF02450BBDC001D38EE /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		FBBEBCF12450BD97001D38EE /* config.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = config.c; sourceTree = "<group>"; };
 		FBC6A7892433BBFD00C8A07C /* rasterization.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rasterization.c; sourceTree = "<group>"; };
 		FBFF6E75244C805600B7FE99 /* test.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test.c; sourceTree = "<group>"; };
 		FBFF6E76244C805600B7FE99 /* test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test.h; sourceTree = "<group>"; };
@@ -94,6 +97,8 @@
 		FB24F1A323F62A1F007BE23D /* src */ = {
 			isa = PBXGroup;
 			children = (
+				FBBEBCF12450BD97001D38EE /* config.c */,
+				FBBEBCF02450BBDC001D38EE /* config.h */,
 				FBFF6E75244C805600B7FE99 /* test.c */,
 				FBFF6E76244C805600B7FE99 /* test.h */,
 				FB20F3BF24434FF900A31A91 /* particle.h */,
@@ -196,6 +201,7 @@
 				FBB26FC324434CD3003A680B /* bucket.c in Sources */,
 				FB9DA6B82441FDD7009BE2CB /* simulation.c in Sources */,
 				FB6DEF9523F62C3700B14D70 /* sched.c in Sources */,
+				FBBEBCF22450BD97001D38EE /* config.c in Sources */,
 				FB6DEF8C23F62B0900B14D70 /* main.c in Sources */,
 				FBA6036724336D7000C69EF3 /* angle.c in Sources */,
 				FB6DEF9223F62B6B00B14D70 /* stb_perlin.c in Sources */,
