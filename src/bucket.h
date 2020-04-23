@@ -16,7 +16,7 @@ typedef struct
 } bucket;
 
 void init_buckets(bucket* buckets, int buckets_count, int height, int max_particles);
-void add_particle_to_bucket(bucket* bucket, config* cfg, particle* particle);
+void add_particle_to_bucket(bucket* bucket, config const* cfg, particle* particle);
 void terminate_buckets(bucket* buckets, int buckets_count);
 
 #endif

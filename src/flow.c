@@ -52,6 +52,13 @@ static void update_particles_func(void *pArg, struct scheduler *s, struct sched_
 static void rasterize_func(void *pArg, struct scheduler *s, struct sched_task_partition p, sched_uint thread_num)
 {
     bucket_data* data = (bucket_data*) pArg;
+    bucket* b = data->bucket;
+
+    b->particles_count = 0;
+    for(int i=0; i<data->num_particles; ++i)
+    {
+        add_particle_to_bucket(b, data->cfg, &data->particles[i]);
+    }
 }
 
 //-----------------------------------------------------------------------------
