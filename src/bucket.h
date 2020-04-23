@@ -3,6 +3,7 @@
 
 #include "particle.h"
 #include "extern/collision.h"
+#include "config.h"
 
 typedef struct
 {
@@ -15,7 +16,7 @@ typedef struct
 } bucket;
 
 void init_buckets(bucket* buckets, int buckets_count, int height, int max_particles);
-void add_particle_to_buckets(bucket* buckets, int buckets_count, particle* particle);
+void add_particle_to_bucket(bucket* bucket, config* cfg, particle* particle);
 void terminate_buckets(bucket* buckets, int buckets_count);
 
 #endif
