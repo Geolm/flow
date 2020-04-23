@@ -10,13 +10,9 @@ typedef struct
     aabb bbox;
     int row_start;
     int row_end;
-    int particles_count;
-    int max_particles;
-    particle* particles;
 } bucket;
 
 void init_buckets(bucket* buckets, int buckets_count, int height, int max_particles);
-void add_particle_to_bucket(bucket* bucket, config const* cfg, particle* particle);
-void terminate_buckets(bucket* buckets, int buckets_count);
+bool test_particle_bucket(bucket* bucket, config const* cfg, particle* particle);
 
 #endif

@@ -14,9 +14,6 @@ void init_buckets(bucket* buckets, int buckets_count, int height, int max_partic
     {
         buckets[i].bbox.min = (vec2) {0.f, v}; v += v_step;
         buckets[i].bbox.max = (vec2) {1.f, v};
-        buckets[i].particles_count = 0;
-        buckets[i].max_particles = max_particles;
-        buckets[i].particles = (particle *) malloc(max_particles * sizeof(particle));
         buckets[i].row_start = row_start; row_start += height_step;
         buckets[i].row_end = row_start;
     }
@@ -25,16 +22,7 @@ void init_buckets(bucket* buckets, int buckets_count, int height, int max_partic
 }
 
 //-----------------------------------------------------------------------------
-void add_particle_to_bucket(bucket* bucket, config const* cfg, particle* particle)
+bool test_particle_bucket(bucket* bucket, config const* cfg, particle* particle)
 {
-
-}
-
-//-----------------------------------------------------------------------------
-void terminate_buckets(bucket* buckets, int buckets_count)
-{
-    for(int i=0; i<buckets_count; ++i)
-    {
-        free(buckets[i].particles);
-    }
+    return false;
 }

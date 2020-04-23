@@ -3,6 +3,7 @@
 #include "bucket.h"
 #include "simulation.h"
 #include "rasterization.h"
+#include "extern/color.h"
 
 //-----------------------------------------------------------------------------
 typedef struct 
@@ -19,6 +20,8 @@ typedef struct
     bucket* bucket;
     particle* particles;
     int num_particles;
+    float progression;
+    uint32_t color;
 } bucket_data;
 
 
@@ -52,12 +55,31 @@ static void update_particles_func(void *pArg, struct scheduler *s, struct sched_
 static void rasterize_func(void *pArg, struct scheduler *s, struct sched_task_partition p, sched_uint thread_num)
 {
     bucket_data* data = (bucket_data*) pArg;
+    config const* cfg = data->cfg;
     bucket* b = data->bucket;
 
-    b->particles_count = 0;
     for(int i=0; i<data->num_particles; ++i)
     {
-        add_particle_to_bucket(b, data->cfg, &data->particles[i]);
+        particle* const p = &data->particles[i];
+        if (test_particle_bucket(b, data->cfg, p))
+        {    
+            switch(cfg->shape)
+            {
+            case SHAPE_LINE:
+                {
+                    rasterize_line(data->image, p->last_position, p->current_position, 
+                                cfg->line_width, data->color, b->row_start, b->row_end);
+                    break;
+                }
+            case SHAPE_DISC:
+                {
+                    rasterize_disc(data->image, p->current_position,
+                                vec2_sq_distance(p->last_position, p->current_position), data->color,
+                                b->row_start, b->row_end);
+                    break;
+                }
+            }
+        }
     }
 }
 
@@ -90,6 +112,9 @@ void generate_image(image_buffers* image, struct scheduler* sched, config* cfg)
         scheduler_add(sched, &update_particles_task, update_particles_func, &common_data, num_particles, TASK_PARTICLE_GRANULARITY);
         scheduler_join(sched, &update_particles_task);
 
+        float progression = (float) step / (float) cfg->num_steps;
+        int alpha = (int)(progression * 255.f);
+
         for(int i=0; i<num_buckets; ++i)
         {
             buckets_data[i].bucket = &buckets[i];
@@ -97,6 +122,8 @@ void generate_image(image_buffers* image, struct scheduler* sched, config* cfg)
             buckets_data[i].image = image;
             buckets_data[i].num_particles = num_particles;
             buckets_data[i].particles = particles;
+            buckets_data[i].progression = progression;
+            buckets_data[i].color = lerp_RGBA(cfg->start_color, cfg->end_color, alpha);
 
             scheduler_add(sched, &buckets_tasks[i], rasterize_func, &buckets_data[i], 1, 1);
         }
@@ -105,7 +132,6 @@ void generate_image(image_buffers* image, struct scheduler* sched, config* cfg)
 
     // free memory
     free(particles);
-    terminate_buckets(buckets, num_buckets);
     free(buckets);
     free(buckets_data);
     free(buckets_tasks);

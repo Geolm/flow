@@ -50,8 +50,6 @@ void test_buckets(image_buffers* image)
         rasterize_line(image, (vec2) {1.f, 0.f}, (vec2) {0.1f, 0.5f}, 0.001f, na16_dark_green, b->row_start, b->row_end);
     }
 
-    terminate_buckets(buckets, NUM_BUCKETS);
-
     int result = stbi_write_png("test_buckets.png", image->width, image->height, 4, image->color_buffer, sizeof(uint32_t) * image->width);
 
     assert(result != 0);
