@@ -9,10 +9,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "extern/sched.h"
+#include "extern/stb_image_write.h"
 #include "parg.h"
 #include "image_buffers.h"
-#include "angle.h"
 #include "test.h"
+#include "flow.h"
 
 #define FLOW_MAJOR_VERSION (0)
 #define FLOW_MINOR_VERSION (1)
@@ -76,6 +77,16 @@ int main(int argc, char* const argv[])
         test_simulation(&image, &sched);
         printf(" done\n");
     }
+    else
+    {
+        config cfg;
+
+        setup_config(&cfg, 0, 0x12345678);
+        generate_image(&image, &sched, &cfg);
+
+        stbi_write_png(output_filename, output_width, output_height, 4, image.color_buffer, sizeof(uint32_t) * output_width);
+    }
+    
 
     // terminate
     terminate_image_buffers(&image);
