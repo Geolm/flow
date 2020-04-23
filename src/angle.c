@@ -12,7 +12,7 @@ static inline float lerp_float(float a, float b, float t)
 }
 
 //-----------------------------------------------------------------------------
-void fill_angle_buffer(image_buffers* image, config* cfg, int row_start, int row_end)
+void fill_angle_buffer(image_buffers* image, config const* cfg, int row_start, int row_end)
 {
     for(int y=row_start; y<row_end; ++y)
     {
