@@ -61,7 +61,7 @@ static void rasterize_func(void *pArg, struct scheduler *s, struct sched_task_pa
     for(int i=0; i<data->num_particles; ++i)
     {
         particle* const p = &data->particles[i];
-        if (test_particle_bucket(b, data->cfg, p))
+        if (intersection_aabb_aabb(b->bbox, p->bbox))
         {    
             switch(cfg->shape)
             {

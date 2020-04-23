@@ -20,9 +20,3 @@ void init_buckets(bucket* buckets, int buckets_count, int height, int max_partic
     
     buckets[buckets_count-1].row_end = height;
 }
-
-//-----------------------------------------------------------------------------
-bool test_particle_bucket(bucket* bucket, config const* cfg, particle* particle)
-{
-    return false;
-}

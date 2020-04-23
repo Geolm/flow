@@ -19,6 +19,8 @@ void init_particles(image_buffers const* image, config const* cfg, particle* par
 //-----------------------------------------------------------------------------
 void update_particles(image_buffers const* image, config const* cfg, particle* particles, int range_min, int range_max)
 {
+    vec2 border = {cfg->line_width, cfg->line_width};
+
     for(int i=range_min; i<range_max; ++i)
     {
         particle* p = &particles[i];
@@ -31,6 +33,8 @@ void update_particles(image_buffers const* image, config const* cfg, particle* p
 
             p->last_position = p->current_position;
             p->current_position = vec2_add(position, vec2_scale(vec2_angle(angle), cfg->position_step));
+            p->bbox = (aabb) {vec2_sub(vec2_min(p->current_position, p->last_position), border), 
+                              vec2_add(vec2_max(p->current_position, p->last_position), border)};
         }
     }
 }
