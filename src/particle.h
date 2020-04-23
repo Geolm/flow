@@ -7,8 +7,6 @@ typedef struct
 {
     vec2 current_position;
     vec2 last_position;
-    float life;
-    float life_step;
 } particle;
 
 #endif 

@@ -7,6 +7,7 @@
 #include "rasterization.h"
 #include "simulation.h"
 #include "bucket.h"
+#include "angle.h"
 
 //-----------------------------------------------------------------------------
 void test_clear(image_buffers* image)
@@ -106,10 +107,14 @@ void test_multithread(image_buffers* image, struct scheduler* sched)
 void test_simulation(image_buffers* image, struct scheduler* sched)
 {
     particle* particles = (particle*) malloc(sizeof(particle) * NUM_PARTICLES);
+    config cfg;
     int seed = 0x12345678;
 
-    init_particles(sched, image, &seed, 0.01f, particles, NUM_PARTICLES);
-    update_particles(sched, image, 0.01f, particles, NUM_PARTICLES);
+
+    setup_config(&cfg, 0, seed);
+    fill_angle_buffer(image, &cfg, 0, image->height);
+    init_particles(image, &seed, particles, 0, NUM_PARTICLES);
+    update_particles(image, 0.01f, particles, 0, NUM_PARTICLES);
 
     free(particles);
     
