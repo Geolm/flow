@@ -3,20 +3,21 @@
 #include "extern/random.h"
 
 //-----------------------------------------------------------------------------
-void init_particles(image_buffers const* image, int* random_seed, particle* particles, int range_min, int range_max)
+void init_particles(image_buffers const* image, config const* cfg, particle* particles, int range_min, int range_max)
 {
+    int random_seed = cfg->random_seed + range_min;
     for(int i=range_min; i<range_max; ++i)
     {
         particle* p = &particles[i];
 
-        p->current_position = (vec2) {iq_random_float(random_seed), iq_random_float(random_seed)};
+        p->current_position = (vec2) {iq_random_float(&random_seed), iq_random_float(&random_seed)};
         p->current_position = vec2_mul(p->current_position, image->max_uv);
         p->last_position = p->current_position;
     }
 }
 
 //-----------------------------------------------------------------------------
-void update_particles(image_buffers const* image, float position_step, particle* particles, int range_min, int range_max)
+void update_particles(image_buffers const* image, config const* cfg, particle* particles, int range_min, int range_max)
 {
     for(int i=range_min; i<range_max; ++i)
     {
@@ -29,7 +30,7 @@ void update_particles(image_buffers const* image, float position_step, particle*
             float angle = fetch_angle_buffer(image, position);
 
             p->last_position = p->current_position;
-            p->current_position = vec2_add(position, vec2_scale(vec2_angle(angle), position_step));
+            p->current_position = vec2_add(position, vec2_scale(vec2_angle(angle), cfg->position_step));
         }
     }
 }
