@@ -10,9 +10,9 @@ void setup_config(config* cfg, int config_value, int random_seed)
     case 0 : 
         {
             cfg->shape = SHAPE_LINE;
-            cfg->line_width = 0.001f;
-            cfg->num_steps = 1;
-            cfg->position_step = 0.01f;
+            cfg->line_width = 0.0005f;
+            cfg->num_steps = 500;
+            cfg->position_step = 0.001f;
             cfg->starting_position = STARTING_POS_RANDOM;
 
             cfg->random_seed = random_seed;

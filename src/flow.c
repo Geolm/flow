@@ -69,14 +69,14 @@ static void rasterize_func(void *pArg, struct scheduler *s, struct sched_task_pa
             case SHAPE_LINE:
                 {
                     rasterize_line(data->image, p->last_position, p->current_position, 
-                                cfg->line_width, data->color, b->row_start, b->row_end);
+                                   cfg->line_width, data->color, b->row_start, b->row_end);
                     break;
                 }
             case SHAPE_DISC:
                 {
                     rasterize_disc(data->image, p->current_position,
-                                vec2_sq_distance(p->last_position, p->current_position), data->color,
-                                b->row_start, b->row_end);
+                                   vec2_sq_distance(p->last_position, p->current_position), data->color,
+                                   b->row_start, b->row_end);
                     break;
                 }
             }
@@ -106,7 +106,7 @@ void generate_image(image_buffers* image, struct scheduler* sched, config* cfg)
     scheduler_add(sched, &init_particles_task, init_particles_func, &common_data, num_particles, TASK_PARTICLE_GRANULARITY);
 
     clear_image(image, cfg->clear_color);
-    init_buckets(buckets, num_buckets, image->height, num_particles);
+    init_buckets(buckets, num_buckets, image->max_uv, image->height, num_particles);
 
     scheduler_wait(sched);
 

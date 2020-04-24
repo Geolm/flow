@@ -41,7 +41,7 @@ void test_buckets(image_buffers* image)
 {
     bucket buckets[NUM_BUCKETS];
 
-    init_buckets(buckets, NUM_BUCKETS, image->height, 1000);
+    init_buckets(buckets, NUM_BUCKETS, image->max_uv, image->height, 1000);
 
     for(int i=0; i<NUM_BUCKETS; ++i)
     {
@@ -80,7 +80,7 @@ void test_multithread(image_buffers* image, struct scheduler* sched)
     struct sched_task tasks[NUM_BUCKETS];
     rasterization_task_data data[NUM_BUCKETS];
 
-    init_buckets(buckets, NUM_BUCKETS, image->height, 1000);
+    init_buckets(buckets, NUM_BUCKETS, image->max_uv, image->height, 1000);
 
     for(int i=0; i<NUM_BUCKETS; ++i)
     {

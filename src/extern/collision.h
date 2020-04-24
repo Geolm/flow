@@ -51,7 +51,11 @@ static inline bool test_point_aabb(aabb box, vec2 point)
 //-----------------------------------------------------------------------------
 static inline bool intersection_aabb_aabb(aabb box0, aabb box1)
 {
-    return !(box1.max.x < box0.min.x || box0.max.x < box1.min.x || box1.max.y < box0.min.y || box0.max.y < box1.min.y);
+    int d0 = box1.max.x < box0.min.x;
+    int d1 = box0.max.x < box1.min.x;
+    int d2 = box1.max.y < box0.min.y;
+    int d3 = box0.max.y < box1.min.y;
+    return !(d0 | d1 | d2 | d3);
 }
 
 #endif // __COLLISION_H__
