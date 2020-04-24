@@ -21,9 +21,9 @@ void setup_config(config* cfg, int config_value, int random_seed)
             cfg->perlin_noise_scale = 0.1f;
             cfg->random_angle_scale = 0.f;
 
-            cfg->clear_color = na16_light_green;
-            cfg->start_color = na16_dark_grey;
-            cfg->end_color = na16_dark_grey;
+            cfg->clear_color = 0xffffffff;
+            cfg->start_color = 0xff000000;
+            cfg->end_color = 0xff000000;
         }
         break;
     }
