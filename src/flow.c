@@ -90,7 +90,7 @@ void generate_image(image_buffers* image, struct scheduler* sched, config* cfg)
     printf("generating ");
     
     // allocations
-    int num_particles = 1000;//image->pixels_count / 4;
+    int num_particles = image->pixels_count / 1000;
     particle* particles = (particle*) malloc(sizeof(particle) * num_particles);
 
     int num_buckets = sched->threads_num;
@@ -110,6 +110,7 @@ void generate_image(image_buffers* image, struct scheduler* sched, config* cfg)
 
     scheduler_wait(sched);
 
+    int threshold = 10;
     for(int step=0; step<cfg->num_steps; ++step)
     {
         scheduler_add(sched, &update_particles_task, update_particles_func, &common_data, num_particles, TASK_PARTICLE_GRANULARITY);
@@ -117,10 +118,13 @@ void generate_image(image_buffers* image, struct scheduler* sched, config* cfg)
 
         float progression = (float) step / (float) cfg->num_steps;
         int alpha = (int)(progression * 255.f);
-        int percentage =(int)(progression * 100.f);
+        int percentage = (step * 100) / cfg->num_steps;
         
-        if (percentage%10 == 0)
+        if (percentage > threshold)
+        {
             printf(".");
+            threshold += 10;
+        }
 
         for(int i=0; i<num_buckets; ++i)
         {
