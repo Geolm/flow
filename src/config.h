@@ -2,6 +2,7 @@
 #define __CONFIG_H__
 
 #include <stdint.h>
+#include "sdf.h"
 
 #define SHAPE_LINE (0)
 #define SHAPE_DISC (1)
@@ -24,13 +25,15 @@ typedef struct
     int starting_position;
 
     float angle_quantization;
-    float base_angle_scale;
+    float sdf_angle_scale;
     float perlin_noise_scale;
     float random_angle_scale;
 
     uint32_t clear_color;
     uint32_t start_color;
     uint32_t end_color;
+
+    fetch_sdf sdf_func;
 } config;
 
 void setup_config(config* cfg, int config_value, int random_seed);

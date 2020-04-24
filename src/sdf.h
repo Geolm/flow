@@ -28,6 +28,14 @@ static inline float compute_sdf_angle(fetch_sdf func, vec2 p, float epsilon)
 }
 
 //-----------------------------------------------------------------------------
+static inline float smooth_min_cubic( float a, float b, float k )
+{
+    // polynomial smooth min (k = 0.1);
+    float h = fmaxf( k-fabsf(a-b), 0.0f)/k;
+    return fminf(a, b) - h*h*h*k*(1.0f/6.0f);
+}
+
+//-----------------------------------------------------------------------------
 static inline float sd_circle(vec2 p, vec2 c, float r)
 {
     return vec2_distance(p, c) - r;

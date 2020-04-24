@@ -6,6 +6,7 @@
 #include "extern/random.h"
 
 #define angle_pi (float) M_PI
+#define sdf_epsilon (0.0001f)
 
 // ----------------------------------------------------------------------------
 static inline float lerp_float(float a, float b, float t)
@@ -23,7 +24,7 @@ void fill_angle_buffer(image_buffers* image, config const* cfg, int row_start, i
         for(int x=0; x<image->width; ++x)
         {
             float u = (float)x * image->xy_to_uv.x;
-            float angle = v * angle_pi * cfg->base_angle_scale;
+            float angle = compute_sdf_angle(cfg->sdf_func, (vec2) {u,v}, sdf_epsilon) * cfg->sdf_angle_scale;
             float perlin = stb_perlin_noise3(u*10.f, v*10.f, 0.f, 0, 0, 0);
             angle += perlin * cfg->perlin_noise_scale;
             angle += (iq_random_angle(&seed) - angle_pi) * cfg->random_angle_scale;

@@ -86,9 +86,7 @@ static void rasterize_func(void *pArg, struct scheduler *s, struct sched_task_pa
 
 //-----------------------------------------------------------------------------
 void generate_image(image_buffers* image, struct scheduler* sched, config* cfg)
-{
-    printf("generating ");
-    
+{   
     // allocations
     int num_particles = image->pixels_count / cfg->num_particles_scale;
     particle* particles = (particle*) malloc(sizeof(particle) * num_particles);
@@ -102,6 +100,7 @@ void generate_image(image_buffers* image, struct scheduler* sched, config* cfg)
     struct sched_task fill_angle_task, init_particles_task, update_particles_task;
 
     // fork : angle buffer generation and particles initialization
+    printf("creating flow map\n");
     scheduler_add(sched, &fill_angle_task, fill_angle_func, &common_data, image->height, TASK_HEIGHT_GRANULARITY);
     scheduler_add(sched, &init_particles_task, init_particles_func, &common_data, num_particles, TASK_PARTICLE_GRANULARITY);
 
@@ -110,6 +109,7 @@ void generate_image(image_buffers* image, struct scheduler* sched, config* cfg)
 
     scheduler_wait(sched);
 
+    printf("generating ");
     int threshold = 10;
     for(int step=0; step<cfg->num_steps; ++step)
     {
