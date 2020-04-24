@@ -11,8 +11,8 @@ void setup_config(config* cfg, int config_value, int random_seed)
         {
             cfg->shape = SHAPE_LINE;
             cfg->line_width = 0.001f;
-            cfg->num_steps = 100;
-            cfg->position_step = 0.001f;
+            cfg->num_steps = 1;
+            cfg->position_step = 0.01f;
             cfg->starting_position = STARTING_POS_RANDOM;
 
             cfg->random_seed = random_seed;

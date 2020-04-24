@@ -16,8 +16,6 @@ typedef struct
     vec2 size;
     vec2 max_uv;
     vec2 msaa_uv;
-    float width_float;
-    float height_float;
     float* angle_buffer;
     uint32_t* color_buffer;
 } image_buffers;
@@ -34,7 +32,7 @@ static inline void init_image_buffers(image_buffers* image, int width, int heigh
     if (image->size.x > image->size.y)
         image->max_uv = (vec2) {1.f, image->size.y / image->size.x};
     else
-        image->max_uv = (vec2) {image->size.x / image->size.y};
+        image->max_uv = (vec2) {image->size.x / image->size.y, 1.f};
 
     image->xy_to_uv = vec2_div(image->max_uv, (vec2) {(float)width - 1,(float)height - 1});
     image->uv_to_xy = vec2_div((vec2) {1.f, 1.f}, image->xy_to_uv);

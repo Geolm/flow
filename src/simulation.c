@@ -25,7 +25,7 @@ void update_particles(image_buffers const* image, config const* cfg, particle* p
     {
         particle* p = &particles[i];
         if (vec2_all_greater(p->current_position, (vec2) {0.f, 0.f}) &&
-                vec2_all_less(p->current_position, image->max_uv))
+            vec2_all_less(p->current_position, image->max_uv))
         {
             // update position
             vec2 position = p->current_position;
@@ -35,6 +35,11 @@ void update_particles(image_buffers const* image, config const* cfg, particle* p
             p->current_position = vec2_add(position, vec2_scale(vec2_angle(angle), cfg->position_step));
             p->bbox = (aabb) {vec2_sub(vec2_min(p->current_position, p->last_position), border), 
                               vec2_add(vec2_max(p->current_position, p->last_position), border)};
+        }
+        else
+        {
+            p->bbox.min = (vec2) {10.f, 10.f};
+            p->bbox.max = (vec2) {11.f, 11.f};
         }
     }
 }

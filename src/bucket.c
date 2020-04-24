@@ -19,4 +19,5 @@ void init_buckets(bucket* buckets, int buckets_count, int height, int max_partic
     }
     
     buckets[buckets_count-1].row_end = height;
+    buckets[buckets_count-1].bbox.max = (vec2) {1.f, 1.f};
 }

@@ -90,7 +90,7 @@ void generate_image(image_buffers* image, struct scheduler* sched, config* cfg)
     printf("generating ");
     
     // allocations
-    int num_particles = image->pixels_count / 4;
+    int num_particles = 1000;//image->pixels_count / 4;
     particle* particles = (particle*) malloc(sizeof(particle) * num_particles);
 
     int num_buckets = sched->threads_num;
@@ -124,15 +124,16 @@ void generate_image(image_buffers* image, struct scheduler* sched, config* cfg)
 
         for(int i=0; i<num_buckets; ++i)
         {
-            buckets_data[i].bucket = &buckets[i];
-            buckets_data[i].cfg = cfg;
-            buckets_data[i].image = image;
-            buckets_data[i].num_particles = num_particles;
-            buckets_data[i].particles = particles;
-            buckets_data[i].progression = progression;
-            buckets_data[i].color = lerp_RGBA(cfg->start_color, cfg->end_color, alpha);
+            bucket_data* data = &buckets_data[i];
+            data->bucket = &buckets[i];
+            data->cfg = cfg;
+            data->image = image;
+            data->num_particles = num_particles;
+            data->particles = particles;
+            data->progression = progression;
+            data->color = lerp_RGBA(cfg->start_color, cfg->end_color, alpha);
 
-            scheduler_add(sched, &buckets_tasks[i], rasterize_func, &buckets_data[i], 1, 1);
+            scheduler_add(sched, &buckets_tasks[i], rasterize_func, data, 1, 1);
         }
         scheduler_wait(sched);
     }
