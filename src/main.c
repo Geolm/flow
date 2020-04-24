@@ -51,8 +51,7 @@ int main(int argc, char* const argv[])
         }
     }
     
-    printf("ouput %dx%d %s\n", output_width, output_height, output_filename);
-
+    printf("image resolution %dx%d\nfilename : \'%s\'\n", output_width, output_height, output_filename);
 
     // scheduler initialization
     void *sched_memory;
@@ -80,6 +79,8 @@ int main(int argc, char* const argv[])
     else
     {
         config cfg;
+        
+        printf("using %d threads\n", sched.threads_num);
 
         setup_config(&cfg, 0, 0x12345678);
         generate_image(&image, &sched, &cfg);
