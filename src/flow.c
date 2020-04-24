@@ -90,7 +90,7 @@ void generate_image(image_buffers* image, struct scheduler* sched, config* cfg)
     printf("generating ");
     
     // allocations
-    int num_particles = image->pixels_count / 1000;
+    int num_particles = image->pixels_count / cfg->num_particles_scale;
     particle* particles = (particle*) malloc(sizeof(particle) * num_particles);
 
     int num_buckets = sched->threads_num;

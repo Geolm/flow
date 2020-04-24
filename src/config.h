@@ -16,6 +16,7 @@ typedef struct
 {
     int shape;
     int random_seed;
+    int num_particles_scale;
 
     float line_width;
     float position_step;
