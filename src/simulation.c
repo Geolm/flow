@@ -24,7 +24,7 @@ void update_particles(image_buffers const* image, config const* cfg, particle* p
     for(int i=range_min; i<range_max; ++i)
     {
         particle* p = &particles[i];
-        if (vec2_all_greater(p->current_position, (vec2) {0.f, 0.f}) || 
+        if (vec2_all_greater(p->current_position, (vec2) {0.f, 0.f}) &&
                 vec2_all_less(p->current_position, image->max_uv))
         {
             // update position
