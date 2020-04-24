@@ -36,6 +36,13 @@ static inline float smooth_min_cubic( float a, float b, float k )
 }
 
 //-----------------------------------------------------------------------------
+static inline vec2 inverse_transform(vec2 point, float rotation_angle, vec2 translation)
+{
+    vec2 rotation = vec2_angle(rotation_angle);
+    return vec2_rotate(vec2_sub(point, translation), rotation);
+}
+
+//-----------------------------------------------------------------------------
 static inline float sd_circle(vec2 p, vec2 c, float r)
 {
     return vec2_distance(p, c) - r;
@@ -49,6 +56,18 @@ static inline float sd_segment(vec2 p, vec2 a, vec2 b)
     float h = clamp_float(vec2_dot(pa,ba)/vec2_dot(ba,ba), 0.f, 1.f);
     
     return vec2_sq_length(vec2_sub(pa, vec2_scale(ba, h)));
+}
+
+//-----------------------------------------------------------------------------
+static inline float sd_uneven_capsule( vec2 p, float r1, float r2, float h )
+{
+    p.x = fabsf(p.x);
+    float b = (r1-r2)/h;
+    float a = sqrtf(1.f-b*b);
+    float k = vec2_dot(p,(vec2){-b,a});
+    if( k < 0.f ) return vec2_length(p) - r1;
+    if( k > a*h ) return vec2_length(vec2_sub(p, (vec2){0.0,h})) - r2;
+    return vec2_dot(p, (vec2){a,b}) - r1;
 }
 
 
