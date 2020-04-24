@@ -1,19 +1,13 @@
 #include "rasterization.h"
 #include "extern/collision.h"
 #include "extern/color.h"
-#include <math.h>
+#include "extern/clamp.h"
 
 //-----------------------------------------------------------------------------
 void clear_image(image_buffers *image, uint32_t color)
 {
     for(int i=0; i<image->pixels_count; ++i)
         image->color_buffer[i] = color;
-}
-
-//-----------------------------------------------------------------------------
-static inline float clamp(float value, float min_value, float max_value)
-{
-    return fmin(max_value, fmax(value, min_value));
 }
 
 //-----------------------------------------------------------------------------
@@ -48,7 +42,7 @@ inline static float line_sq_distance(vec2 sample_position, vec2 a, vec2 b)
 {
     vec2 pa = vec2_sub(sample_position, a);
     vec2 ba = vec2_sub(b, a);
-    float h = clamp(vec2_dot(pa,ba)/vec2_dot(ba,ba), 0.f, 1.f);
+    float h = clamp_float(vec2_dot(pa,ba)/vec2_dot(ba,ba), 0.f, 1.f);
     
     return vec2_sq_length(vec2_sub(pa, vec2_scale(ba, h)));
 }
@@ -94,24 +88,15 @@ static int get_triangle_samples_count(vec2 top_left, vec2 offset_step, int max_s
     return samples_count;
 }
 
-//-----------------------------------------------------------------------------
-static inline int int_clamp(int value, int value_min, int value_max)
-{
-    if (value > value_max)
-        value = value_max;
-    if (value < value_min)
-        value = value_min;
 
-    return value;
-}
 
 #define COMPUTE_INTEGER_AABB \
     shape_aabb.min = vec2_mul(shape_aabb.min, image->uv_to_xy); \
     shape_aabb.max = vec2_mul(shape_aabb.max, image->uv_to_xy); \
-    int column_start = int_clamp((int)floorf(shape_aabb.min.x), 0, image->width); \
-    int column_end = int_clamp((int)ceilf(shape_aabb.max.x), 0, image->width); \
-    int row_start = int_clamp((int)floorf(shape_aabb.min.y), bucket_row_start, bucket_row_end); \
-    int row_end = int_clamp((int)floorf(shape_aabb.max.y), bucket_row_start, bucket_row_end);
+    int column_start = clamp_int((int)floorf(shape_aabb.min.x), 0, image->width); \
+    int column_end = clamp_int((int)ceilf(shape_aabb.max.x), 0, image->width); \
+    int row_start = clamp_int((int)floorf(shape_aabb.min.y), bucket_row_start, bucket_row_end); \
+    int row_end = clamp_int((int)floorf(shape_aabb.max.y), bucket_row_start, bucket_row_end);
 
 //-----------------------------------------------------------------------------
 void rasterize_line(image_buffers *image, vec2 p0, vec2 p1, float width, uint32_t color, int bucket_row_start, int bucket_row_end)

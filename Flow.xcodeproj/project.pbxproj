@@ -39,6 +39,8 @@
 		FB12708E2443F893002052D6 /* color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = color.h; path = src/extern/color.h; sourceTree = "<group>"; };
 		FB12708F2443F893002052D6 /* collision.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = collision.c; path = src/extern/collision.c; sourceTree = "<group>"; };
 		FB1270902443F893002052D6 /* collision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = collision.h; path = src/extern/collision.h; sourceTree = "<group>"; };
+		FB1EA0E82453203900D41747 /* clamp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = clamp.h; path = src/extern/clamp.h; sourceTree = "<group>"; };
+		FB1EA0E92453205900D41747 /* sdf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdf.h; sourceTree = "<group>"; };
 		FB20F3BF24434FF900A31A91 /* particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = particle.h; sourceTree = "<group>"; };
 		FB24F1A123F62A1F007BE23D /* Flow */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Flow; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB66DD57242E6BEC0093B249 /* parg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = parg.h; path = src/extern/parg.h; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 		FB24F1A323F62A1F007BE23D /* src */ = {
 			isa = PBXGroup;
 			children = (
+				FB1EA0E92453205900D41747 /* sdf.h */,
 				FBBEBCF32450C343001D38EE /* flow.c */,
 				FBBEBCF42450C343001D38EE /* flow.h */,
 				FBBEBCF12450BD97001D38EE /* config.c */,
@@ -124,6 +127,7 @@
 		FB6DEF8923F62AF700B14D70 /* extern */ = {
 			isa = PBXGroup;
 			children = (
+				FB1EA0E82453203900D41747 /* clamp.h */,
 				FBFF6E78244C823000B7FE99 /* palette.h */,
 				FB12708F2443F893002052D6 /* collision.c */,
 				FB1270902443F893002052D6 /* collision.h */,
