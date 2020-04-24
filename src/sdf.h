@@ -6,6 +6,27 @@
 
 // based on https://iquilezles.org/www/articles/distfunctions2d/distfunctions2d.htm
 
+
+typedef float (*fetch_sdf)(vec2 p);
+
+//-----------------------------------------------------------------------------
+static inline vec2 compute_sdf_normal(fetch_sdf func, vec2 p, float epsilon)
+{
+    float ddx = func(vec2_add(p, (vec2) {epsilon, 0.f})) - func(vec2_add(p, (vec2) {-epsilon, 0.f}));
+    float ddy = func(vec2_add(p, (vec2) {0.f, epsilon})) - func(vec2_add(p, (vec2) {0.f, -epsilon}));
+    vec2 normal = {ddx,  ddy};
+    vec2_normalize(&normal);
+    return normal;
+}
+
+//-----------------------------------------------------------------------------
+static inline float compute_sdf_angle(fetch_sdf func, vec2 p, float epsilon)
+{
+    vec2 normal = compute_sdf_normal(func, p, epsilon);
+    vec2 tangent = vec2_skew(normal);
+    return atan2f(tangent.y, tangent.x);
+}
+
 //-----------------------------------------------------------------------------
 static inline float sd_circle(vec2 p, vec2 c, float r)
 {
