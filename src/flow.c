@@ -4,6 +4,7 @@
 #include "simulation.h"
 #include "rasterization.h"
 #include "extern/color.h"
+#include <stdio.h>
 
 //-----------------------------------------------------------------------------
 typedef struct 
@@ -86,6 +87,8 @@ static void rasterize_func(void *pArg, struct scheduler *s, struct sched_task_pa
 //-----------------------------------------------------------------------------
 void generate_image(image_buffers* image, struct scheduler* sched, config* cfg)
 {
+    printf("generating ");
+    
     // allocations
     int num_particles = image->pixels_count / 4;
     particle* particles = (particle*) malloc(sizeof(particle) * num_particles);
@@ -114,6 +117,10 @@ void generate_image(image_buffers* image, struct scheduler* sched, config* cfg)
 
         float progression = (float) step / (float) cfg->num_steps;
         int alpha = (int)(progression * 255.f);
+        int percentage =(int)(progression * 100.f);
+        
+        if (percentage%10 == 0)
+            printf(".");
 
         for(int i=0; i<num_buckets; ++i)
         {
@@ -129,6 +136,8 @@ void generate_image(image_buffers* image, struct scheduler* sched, config* cfg)
         }
         scheduler_wait(sched);
     }
+    
+    printf(" done\n");
 
     // free memory
     free(particles);
