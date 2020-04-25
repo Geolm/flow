@@ -49,5 +49,28 @@ void setup_config(config* cfg, int config_value, int random_seed)
             cfg->sdf_func = sdf_cross;
         }
         break;
+    // disc
+    case 1 :
+        {
+            cfg->shape = SHAPE_DISC;
+            cfg->line_width = 0.0f;
+            cfg->num_steps = 100;
+            cfg->num_particles_scale = 1000;
+            cfg->position_step = 0.005f;
+            cfg->starting_position = STARTING_POS_RANDOM;
+
+            cfg->random_seed = random_seed;
+            cfg->angle_quantization = 0.f;
+            cfg->sdf_angle_scale = 1.0f;
+            cfg->perlin_noise_scale = 0.0f;
+            cfg->random_angle_scale = 0.0f;
+
+            cfg->clear_color = 0xffffffff;
+            cfg->start_color = 0xff000000;
+            cfg->end_color = 0xffffffff;
+
+            cfg->sdf_func = sdf_cross;
+        }
+        break;
     }
 }

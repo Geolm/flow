@@ -68,15 +68,14 @@ static void rasterize_func(void *pArg, struct scheduler *s, struct sched_task_pa
             {
             case SHAPE_LINE:
                 {
-                    rasterize_line(data->image, p->last_position, p->current_position, 
-                                   cfg->line_width, data->color, b->row_start, b->row_end);
+                    rasterize_line(data->image, p->last_position, p->current_position, cfg->line_width, data->color, b->row_start, b->row_end);
                     break;
                 }
             case SHAPE_DISC:
                 {
-                    rasterize_disc(data->image, p->current_position,
-                                   vec2_sq_distance(p->last_position, p->current_position), data->color,
-                                   b->row_start, b->row_end);
+                    vec2 center = vec2_scale(vec2_add(p->last_position, p->current_position), 0.5f);
+                    float radius = vec2_distance(p->last_position, p->current_position) * 0.5f;
+                    rasterize_disc(data->image, center, radius, data->color, b->row_start, b->row_end);
                     break;
                 }
             }

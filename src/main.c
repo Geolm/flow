@@ -35,11 +35,12 @@ int main(int argc, char* const argv[])
     int output_width = 1600;
     int output_height = 900;
     int horizontal_samples_count = 4;
+    int config_index = 0;
     const char* output_filename = "output.png";
     bool run_tests = false;
 
     parg_init(&ps);
-    while ((c = parg_getopt(&ps, argc, argv, "w:sh:so:stq:s")) != -1)
+    while ((c = parg_getopt(&ps, argc, argv, "w:sh:so:stq:sc:s")) != -1)
     {
 		switch (c) 
         {
@@ -48,6 +49,7 @@ int main(int argc, char* const argv[])
         case 'o' : output_filename = ps.optarg; break;
         case 'q' : horizontal_samples_count = atoi(ps.optarg); break;
         case 't' : run_tests = true; break;
+        case 'c' : config_index = atoi(ps.optarg); break;
         }
     }
     
@@ -82,7 +84,7 @@ int main(int argc, char* const argv[])
         
         printf("using %d threads\n", sched.threads_num);
 
-        setup_config(&cfg, 0, 0x12345678);
+        setup_config(&cfg, config_index, 0x12345678);
         generate_image(&image, &sched, &cfg);
 
         stbi_write_png(output_filename, output_width, output_height, 4, image.color_buffer, sizeof(uint32_t) * output_width);

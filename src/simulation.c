@@ -19,7 +19,11 @@ void init_particles(image_buffers const* image, config const* cfg, particle* par
 //-----------------------------------------------------------------------------
 void update_particles(image_buffers const* image, config const* cfg, particle* particles, int range_min, int range_max)
 {
-    vec2 border = {cfg->line_width, cfg->line_width};
+    vec2 border;
+    if (cfg->shape == SHAPE_LINE)
+        border = (vec2) {cfg->line_width, cfg->line_width};
+    else
+        border = (vec2) {cfg->position_step, cfg->position_step};
 
     for(int i=range_min; i<range_max; ++i)
     {
