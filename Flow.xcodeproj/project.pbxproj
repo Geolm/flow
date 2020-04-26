@@ -13,6 +13,7 @@
 		FB6DEF9223F62B6B00B14D70 /* stb_perlin.c in Sources */ = {isa = PBXBuildFile; fileRef = FB6DEF9123F62B6B00B14D70 /* stb_perlin.c */; };
 		FB6DEF9523F62C3700B14D70 /* sched.c in Sources */ = {isa = PBXBuildFile; fileRef = FB6DEF9323F62C3700B14D70 /* sched.c */; };
 		FB6DEF9623F62C3700B14D70 /* stb_image_write.c in Sources */ = {isa = PBXBuildFile; fileRef = FB6DEF9423F62C3700B14D70 /* stb_image_write.c */; };
+		FB84DC382455CA6F00398387 /* rasterization_avx.c in Sources */ = {isa = PBXBuildFile; fileRef = FB84DC372455CA6F00398387 /* rasterization_avx.c */; };
 		FB9DA6B82441FDD7009BE2CB /* simulation.c in Sources */ = {isa = PBXBuildFile; fileRef = FB9DA6B72441FDD7009BE2CB /* simulation.c */; };
 		FBA6036724336D7000C69EF3 /* angle.c in Sources */ = {isa = PBXBuildFile; fileRef = FBA6036524336D7000C69EF3 /* angle.c */; };
 		FBB26FC324434CD3003A680B /* bucket.c in Sources */ = {isa = PBXBuildFile; fileRef = FBB26FC224434CD3003A680B /* bucket.c */; };
@@ -54,6 +55,8 @@
 		FB6DEF9123F62B6B00B14D70 /* stb_perlin.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = stb_perlin.c; path = src/extern/stb_perlin.c; sourceTree = "<group>"; };
 		FB6DEF9323F62C3700B14D70 /* sched.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sched.c; path = src/extern/sched.c; sourceTree = "<group>"; };
 		FB6DEF9423F62C3700B14D70 /* stb_image_write.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = stb_image_write.c; path = src/extern/stb_image_write.c; sourceTree = "<group>"; };
+		FB84DC362455CA6E00398387 /* rasterization_avx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rasterization_avx.h; sourceTree = "<group>"; };
+		FB84DC372455CA6F00398387 /* rasterization_avx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rasterization_avx.c; sourceTree = "<group>"; };
 		FB9DA6B52441FDD7009BE2CB /* simulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simulation.h; sourceTree = "<group>"; };
 		FB9DA6B62441FDD7009BE2CB /* image_buffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = image_buffers.h; sourceTree = "<group>"; };
 		FB9DA6B72441FDD7009BE2CB /* simulation.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = simulation.c; sourceTree = "<group>"; };
@@ -102,6 +105,8 @@
 		FB24F1A323F62A1F007BE23D /* src */ = {
 			isa = PBXGroup;
 			children = (
+				FB84DC372455CA6F00398387 /* rasterization_avx.c */,
+				FB84DC362455CA6E00398387 /* rasterization_avx.h */,
 				FB1EA0E92453205900D41747 /* sdf.h */,
 				FBBEBCF32450C343001D38EE /* flow.c */,
 				FBBEBCF42450C343001D38EE /* flow.h */,
@@ -216,6 +221,7 @@
 				FBA6036724336D7000C69EF3 /* angle.c in Sources */,
 				FB6DEF9223F62B6B00B14D70 /* stb_perlin.c in Sources */,
 				FB6DEF9623F62C3700B14D70 /* stb_image_write.c in Sources */,
+				FB84DC382455CA6F00398387 /* rasterization_avx.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,6 +260,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CLANG_X86_VECTOR_INSTRUCTIONS = avx;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -312,12 +319,14 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CLANG_X86_VECTOR_INSTRUCTIONS = avx;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
