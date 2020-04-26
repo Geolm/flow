@@ -2,11 +2,11 @@
 #include "extern/collision.h"
 #include "immintrin.h"
 #include "extern/clamp.h"
-#include <stdint.h>
+#include "extern/color.h"
 
 
 //----------------------------------------------------------------------------------------------------------------------
-static inline uint32_t popcount(uint32_t value)
+static inline unsigned int popcount(unsigned int value)
 {
      value = value - ((value >> 1) & 0x55555555);
      value = (value & 0x33333333) + ((value >> 2) & 0x33333333);
@@ -45,8 +45,8 @@ void rasterize_disc_avx(image_buffers *image, vec2 center, float radius, uint32_
     for(int y=row_start; y<row_end; ++y)
     {
         __m256 top_left_x = _mm256_mul_ps(_mm256_set1_ps((float)column_start), pixel_size);
-        __m256 left = _mm256_add_ps(top_left_x, msaa_offset_x_left);
-        __m256 right = _mm256_add_ps(top_left_x, msaa_offset_x_right);
+        __m256 x_left = _mm256_add_ps(top_left_x, msaa_offset_x_left);
+        __m256 x_right = _mm256_add_ps(top_left_x, msaa_offset_x_right);
         
         for(int x=column_start; x<column_end; ++x)
         {
@@ -56,18 +56,32 @@ void rasterize_disc_avx(image_buffers *image, vec2 center, float radius, uint32_
             {
                 __m256 y = _mm256_add_ps(top_left_y, msaa_offset);
 
-                
+                // left part
+                __m256 delta_x = _mm256_sub_ps(x_left, center_x);
+                __m256 delta_y = _mm256_sub_ps(y, center_y);
+
+                delta_x = _mm256_mul_ps(delta_x, delta_x);
+                delta_y = _mm256_mul_ps(delta_y, delta_y);
+                __m256 squared_distance = _mm256_add_ps(delta_x, delta_y);
+                __m256 result = _mm256_cmp_ps(squared_distance, squared_radius, _CMP_LT_OS);
+
+                alpha += popcount(_mm256_movemask_ps(result));
+
+                // right part
+                delta_x = _mm256_sub_ps(x_right, center_x);
+                delta_x = _mm256_mul_ps(delta_x, delta_x);
+                squared_distance = _mm256_add_ps(delta_x, delta_y);
+                result = _mm256_cmp_ps(squared_distance, squared_radius, _CMP_LT_OS);
+
+                alpha += popcount(_mm256_movemask_ps(result));
             }
-            /*int samples_count = get_disc_samples_count(top_left, image->msaa_uv, image->max_samples, center, squared_radius);
-            int alpha = (samples_count << 8) / max_samples_squared;
+            
             uint32_t* pixel = &image->color_buffer[y * image->width + x];
             if (alpha)
                 *pixel = lerp_RGBA(*pixel, color, alpha);
-            top_left.x += image->xy_to_uv.x;
-            */
-
-           left = _mm256_add_ps(left, pixel_size);
-           right = _mm256_add_ps(right, pixel_size);
+            
+            x_left = _mm256_add_ps(x_left, pixel_size);
+            x_right = _mm256_add_ps(x_right, pixel_size);
         }
 
         top_left_y = _mm256_add_ps(top_left_y, pixel_size);
