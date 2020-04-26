@@ -69,7 +69,7 @@ static void rasterize_func(void *pArg, struct scheduler *s, struct sched_task_pa
             {
             case SHAPE_LINE:
                 {
-                    rasterize_line(data->image, p->last_position, p->current_position, cfg->line_width, data->color, b->row_start, b->row_end);
+                    rasterize_line_avx(data->image, p->last_position, p->current_position, cfg->line_width, data->color, b->row_start, b->row_end);
                     break;
                 }
             case SHAPE_DISC:

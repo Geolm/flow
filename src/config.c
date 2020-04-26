@@ -32,7 +32,7 @@ void setup_config(config* cfg, int config_value, int random_seed)
             cfg->shape = SHAPE_LINE;
             cfg->line_width = 0.0003f;
             cfg->num_steps = 1000;
-            cfg->num_particles = 4000;
+            cfg->num_particles = 1000;
             cfg->position_step = 0.001f;
             cfg->starting_position = STARTING_POS_RANDOM;
 
