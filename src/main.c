@@ -36,7 +36,6 @@ int main(int argc, char* const argv[])
 
     int output_width = 1600;
     int output_height = 900;
-    int horizontal_samples_count = 4;
     int config_index = 0;
     const char* output_filename = "output.png";
     bool run_tests = false;
@@ -49,7 +48,6 @@ int main(int argc, char* const argv[])
         case 'w' : output_width = atoi(ps.optarg); break;
         case 'h' : output_height = atoi(ps.optarg); break;
         case 'o' : output_filename = ps.optarg; break;
-        case 'q' : horizontal_samples_count = atoi(ps.optarg); break;
         case 't' : run_tests = true; break;
         case 'c' : config_index = atoi(ps.optarg); break;
         }
@@ -69,8 +67,7 @@ int main(int argc, char* const argv[])
 
     // init image buffers
     image_buffers image;
-    init_image_buffers(&image, output_width, output_height, horizontal_samples_count);
-
+    init_image_buffers(&image, output_width, output_height);
 
     if (run_tests)
     {
