@@ -10,10 +10,12 @@
 #include <stdlib.h>
 #include "extern/sched.h"
 #include "extern/stb_image_write.h"
+#include "extern/sokol_time.h"
 #include "parg.h"
 #include "image_buffers.h"
 #include "test.h"
 #include "flow.h"
+
 
 #define FLOW_MAJOR_VERSION (0)
 #define FLOW_MINOR_VERSION (1)
@@ -62,6 +64,8 @@ int main(int argc, char* const argv[])
     scheduler_init(&sched, &needed_memory, SCHED_DEFAULT, 0);
     sched_memory = malloc(needed_memory); 
     scheduler_start(&sched, sched_memory);
+    
+    stm_setup();
 
     // init image buffers
     image_buffers image;
@@ -85,7 +89,15 @@ int main(int argc, char* const argv[])
         printf("using %d threads\n", sched.threads_num);
 
         setup_config(&cfg, config_index, 0x12345678);
-        generate_image(&image, &sched, &cfg);
+        
+        {
+            uint64_t current_time = stm_now();
+            generate_image(&image, &sched, &cfg);
+            uint64_t raw_delta_time = stm_laptime(&current_time);
+            float duration = (float)stm_sec(raw_delta_time);
+            
+            printf("\nduration : %f seconds\n", duration);
+        }
 
         stbi_write_png(output_filename, output_width, output_height, 4, image.color_buffer, sizeof(uint32_t) * output_width);
     }

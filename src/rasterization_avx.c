@@ -20,7 +20,7 @@ static inline unsigned int popcount(unsigned int value)
     int column_start = clamp_int((int)floorf(shape_aabb.min.x), 0, image->width); \
     int column_end = clamp_int((int)ceilf(shape_aabb.max.x), 0, image->width); \
     int row_start = clamp_int((int)floorf(shape_aabb.min.y), bucket_row_start, bucket_row_end); \
-    int row_end = clamp_int((int)floorf(shape_aabb.max.y), bucket_row_start, bucket_row_end);
+    int row_end = clamp_int((int)ceilf(shape_aabb.max.y), bucket_row_start, bucket_row_end);
 //----------------------------------------------------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
@@ -35,7 +35,7 @@ void rasterize_disc_avx(image_buffers *image, vec2 center, float radius, uint32_
 
     __m256 squared_radius = _mm256_set1_ps(radius * radius);
     __m256 center_x = _mm256_set1_ps(center.x);
-    __m256 center_y = _mm256_set1_ps(center.x);
+    __m256 center_y = _mm256_set1_ps(center.y);
     __m256 pixel_size = _mm256_set1_ps(image->xy_to_uv.x);
     __m256 top_left_y = _mm256_mul_ps(_mm256_set1_ps((float)row_start), pixel_size);
     __m256 msaa_offset = _mm256_set1_ps(image->msaa_uv.x);
@@ -45,20 +45,23 @@ void rasterize_disc_avx(image_buffers *image, vec2 center, float radius, uint32_
     for(int y=row_start; y<row_end; ++y)
     {
         __m256 top_left_x = _mm256_mul_ps(_mm256_set1_ps((float)column_start), pixel_size);
-        __m256 x_left = _mm256_add_ps(top_left_x, msaa_offset_x_left);
-        __m256 x_right = _mm256_add_ps(top_left_x, msaa_offset_x_right);
+        __m256 sample_x_left = _mm256_add_ps(top_left_x, msaa_offset_x_left);
+        __m256 sample_x_right = _mm256_add_ps(top_left_x, msaa_offset_x_right);
+        
         
         for(int x=column_start; x<column_end; ++x)
         {
             int alpha = 0;
+            
+            __m256 sample_y = top_left_y;
 
             for(int i=0; i<16; ++i)
             {
-                __m256 y = _mm256_add_ps(top_left_y, msaa_offset);
+                 sample_y = _mm256_add_ps(sample_y, msaa_offset);
 
                 // left part
-                __m256 delta_x = _mm256_sub_ps(x_left, center_x);
-                __m256 delta_y = _mm256_sub_ps(y, center_y);
+                __m256 delta_x = _mm256_sub_ps(sample_x_left, center_x);
+                __m256 delta_y = _mm256_sub_ps(sample_y, center_y);
 
                 delta_x = _mm256_mul_ps(delta_x, delta_x);
                 delta_y = _mm256_mul_ps(delta_y, delta_y);
@@ -68,7 +71,7 @@ void rasterize_disc_avx(image_buffers *image, vec2 center, float radius, uint32_
                 alpha += popcount(_mm256_movemask_ps(result));
 
                 // right part
-                delta_x = _mm256_sub_ps(x_right, center_x);
+                delta_x = _mm256_sub_ps(sample_x_right, center_x);
                 delta_x = _mm256_mul_ps(delta_x, delta_x);
                 squared_distance = _mm256_add_ps(delta_x, delta_y);
                 result = _mm256_cmp_ps(squared_distance, squared_radius, _CMP_LT_OS);
@@ -80,8 +83,8 @@ void rasterize_disc_avx(image_buffers *image, vec2 center, float radius, uint32_
             if (alpha)
                 *pixel = lerp_RGBA(*pixel, color, alpha);
             
-            x_left = _mm256_add_ps(x_left, pixel_size);
-            x_right = _mm256_add_ps(x_right, pixel_size);
+            sample_x_left = _mm256_add_ps(sample_x_left, pixel_size);
+            sample_x_right = _mm256_add_ps(sample_x_right, pixel_size);
         }
 
         top_left_y = _mm256_add_ps(top_left_y, pixel_size);

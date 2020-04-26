@@ -96,7 +96,7 @@ static int get_triangle_samples_count(vec2 top_left, vec2 offset_step, int max_s
     int column_start = clamp_int((int)floorf(shape_aabb.min.x), 0, image->width); \
     int column_end = clamp_int((int)ceilf(shape_aabb.max.x), 0, image->width); \
     int row_start = clamp_int((int)floorf(shape_aabb.min.y), bucket_row_start, bucket_row_end); \
-    int row_end = clamp_int((int)floorf(shape_aabb.max.y), bucket_row_start, bucket_row_end);
+    int row_end = clamp_int((int)ceilf(shape_aabb.max.y), bucket_row_start, bucket_row_end);
 
 //-----------------------------------------------------------------------------
 void rasterize_line(image_buffers *image, vec2 p0, vec2 p1, float width, uint32_t color, int bucket_row_start, int bucket_row_end)

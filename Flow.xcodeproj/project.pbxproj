@@ -20,6 +20,7 @@
 		FBBEBCF22450BD97001D38EE /* config.c in Sources */ = {isa = PBXBuildFile; fileRef = FBBEBCF12450BD97001D38EE /* config.c */; };
 		FBBEBCF52450C343001D38EE /* flow.c in Sources */ = {isa = PBXBuildFile; fileRef = FBBEBCF32450C343001D38EE /* flow.c */; };
 		FBC6A78A2433BBFE00C8A07C /* rasterization.c in Sources */ = {isa = PBXBuildFile; fileRef = FBC6A7892433BBFD00C8A07C /* rasterization.c */; };
+		FBE261512455E04E00355544 /* sokol_time.c in Sources */ = {isa = PBXBuildFile; fileRef = FBE261502455E04E00355544 /* sokol_time.c */; };
 		FBFF6E77244C805600B7FE99 /* test.c in Sources */ = {isa = PBXBuildFile; fileRef = FBFF6E75244C805600B7FE99 /* test.c */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +70,8 @@
 		FBBEBCF32450C343001D38EE /* flow.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = flow.c; sourceTree = "<group>"; };
 		FBBEBCF42450C343001D38EE /* flow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = flow.h; sourceTree = "<group>"; };
 		FBC6A7892433BBFD00C8A07C /* rasterization.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rasterization.c; sourceTree = "<group>"; };
+		FBE2614F2455E04D00355544 /* sokol_time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sokol_time.h; path = src/extern/sokol_time.h; sourceTree = "<group>"; };
+		FBE261502455E04E00355544 /* sokol_time.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sokol_time.c; path = src/extern/sokol_time.c; sourceTree = "<group>"; };
 		FBFF6E75244C805600B7FE99 /* test.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test.c; sourceTree = "<group>"; };
 		FBFF6E76244C805600B7FE99 /* test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test.h; sourceTree = "<group>"; };
 		FBFF6E78244C823000B7FE99 /* palette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = palette.h; path = src/extern/palette.h; sourceTree = "<group>"; };
@@ -132,6 +135,8 @@
 		FB6DEF8923F62AF700B14D70 /* extern */ = {
 			isa = PBXGroup;
 			children = (
+				FBE261502455E04E00355544 /* sokol_time.c */,
+				FBE2614F2455E04D00355544 /* sokol_time.h */,
 				FB1EA0E82453203900D41747 /* clamp.h */,
 				FBFF6E78244C823000B7FE99 /* palette.h */,
 				FB12708F2443F893002052D6 /* collision.c */,
@@ -209,6 +214,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBBEBCF52450C343001D38EE /* flow.c in Sources */,
+				FBE261512455E04E00355544 /* sokol_time.c in Sources */,
 				FB1270912443F893002052D6 /* collision.c in Sources */,
 				FBFF6E77244C805600B7FE99 /* test.c in Sources */,
 				FBC6A78A2433BBFE00C8A07C /* rasterization.c in Sources */,

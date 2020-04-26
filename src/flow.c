@@ -3,6 +3,7 @@
 #include "bucket.h"
 #include "simulation.h"
 #include "rasterization.h"
+#include "rasterization_avx.h"
 #include "extern/color.h"
 #include <stdio.h>
 
@@ -75,7 +76,7 @@ static void rasterize_func(void *pArg, struct scheduler *s, struct sched_task_pa
                 {
                     vec2 center = vec2_scale(vec2_add(p->last_position, p->current_position), 0.5f);
                     float radius = vec2_distance(p->last_position, p->current_position) * 0.5f;
-                    rasterize_disc(data->image, center, radius, data->color, b->row_start, b->row_end);
+                    rasterize_disc_avx(data->image, center, radius, data->color, b->row_start, b->row_end);
                     break;
                 }
             }
