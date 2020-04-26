@@ -3,16 +3,45 @@
 #include "extern/random.h"
 
 //-----------------------------------------------------------------------------
-void init_particles(image_buffers const* image, config const* cfg, particle* particles, int range_min, int range_max)
+void init_particles(image_buffers const* image, config const* cfg, particle* particles, int num_particles, int range_min, int range_max)
 {
     int random_seed = cfg->random_seed + range_min;
+
+    float cell_width = 0;
+    float cell_height = 0;
+    int grid_width = 0;
+    if (cfg->starting_position == STARTING_POS_GRID)
+    {
+        float rsqr_num_particles = sqrtf((float) num_particles);
+        cell_width = image->max_uv.x / rsqr_num_particles;
+        cell_height = image->max_uv.y / rsqr_num_particles;
+        grid_width = (int)rsqr_num_particles;
+    }
+
     for(int i=range_min; i<range_max; ++i)
     {
         particle* p = &particles[i];
 
-        p->current_position = (vec2) {iq_random_float(&random_seed), iq_random_float(&random_seed)};
-        p->current_position = vec2_mul(p->current_position, image->max_uv);
-        p->last_position = p->current_position;
+        switch(cfg->starting_position)
+        {
+        case STARTING_POS_RANDOM :
+            {
+                p->current_position = (vec2) {iq_random_float(&random_seed), iq_random_float(&random_seed)};
+                p->current_position = vec2_mul(p->current_position, image->max_uv);
+                p->last_position = p->current_position;
+            }
+            break;
+        case STARTING_POS_GRID :
+            {
+                float y = (float)(i / grid_width) * cell_height;
+                float x = (float)(i % grid_width) * cell_width;
+
+                p->current_position = (vec2) {x + iq_random_float(&random_seed) * cell_width, 
+                                              y + iq_random_float(&random_seed) * cell_height};
+                p->last_position = p->current_position;
+            }
+            break;
+        }
     }
 }
 

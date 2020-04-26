@@ -6,7 +6,7 @@
 #include "config.h"
 
 //-----------------------------------------------------------------------------
-void init_particles(image_buffers const* image, config const* cfg, particle* particles, int range_min, int range_max);
+void init_particles(image_buffers const* image, config const* cfg, particle* particles, int num_particles, int range_min, int range_max);
 void update_particles(image_buffers const* image, config const* cfg, particle* particles, int range_min, int range_max);
 
 

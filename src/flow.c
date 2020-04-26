@@ -13,6 +13,7 @@ typedef struct
     image_buffers* image;
     config const* cfg;
     particle* particles;
+    int num_particles;
 } task_common_data;
 
 typedef struct 
@@ -43,7 +44,7 @@ static void fill_angle_func(void *pArg, struct scheduler *s, struct sched_task_p
 static void init_particles_func(void *pArg, struct scheduler *s, struct sched_task_partition p, sched_uint thread_num)
 {
     task_common_data* data = (task_common_data*) pArg;
-    init_particles(data->image, data->cfg, data->particles, p.start, p.end);
+    init_particles(data->image, data->cfg, data->particles, data->num_particles, p.start, p.end);
 }
 
 //-----------------------------------------------------------------------------
@@ -96,7 +97,7 @@ void generate_image(image_buffers* image, struct scheduler* sched, config* cfg)
     bucket_data* buckets_data = (bucket_data*)malloc(sizeof(bucket_data) * num_buckets);
     struct sched_task* buckets_tasks = (struct sched_task*)malloc(sizeof(struct sched_task) * num_buckets);
 
-    task_common_data common_data = {image, cfg, particles};
+    task_common_data common_data = {image, cfg, particles, num_particles};
     struct sched_task fill_angle_task, init_particles_task, update_particles_task;
 
     // fork : angle buffer generation and particles initialization

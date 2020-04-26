@@ -111,7 +111,7 @@ void test_simulation(image_buffers* image, struct scheduler* sched)
 
     setup_config(&cfg, 0, seed);
     fill_angle_buffer(image, &cfg, 0, image->height);
-    init_particles(image, &cfg, particles, 0, NUM_PARTICLES);
+    init_particles(image, &cfg, particles, NUM_PARTICLES, 0, NUM_PARTICLES);
     update_particles(image, &cfg, particles, 0, NUM_PARTICLES);
 
     free(particles);
