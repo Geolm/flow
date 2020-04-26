@@ -88,7 +88,7 @@ static void rasterize_func(void *pArg, struct scheduler *s, struct sched_task_pa
 void generate_image(image_buffers* image, struct scheduler* sched, config* cfg)
 {   
     // allocations
-    int num_particles = image->pixels_count / cfg->num_particles_scale;
+    int num_particles = cfg->num_particles;
     particle* particles = (particle*) malloc(sizeof(particle) * num_particles);
 
     int num_buckets = sched->threads_num;
