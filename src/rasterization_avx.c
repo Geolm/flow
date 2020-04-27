@@ -70,8 +70,7 @@ void rasterize_disc_avx(image_buffers *image, vec2 center, float radius, uint32_
 
                 // right part
                 delta_x = _mm256_sub_ps(sample_x_right, center_x);
-                delta_x = _mm256_mul_ps(delta_x, delta_x);
-                squared_distance = _mm256_add_ps(delta_x, delta_y);
+                squared_distance = _mm256_fmadd_ps(delta_x, delta_x, delta_y);
                 result = _mm256_cmp_ps(squared_distance, squared_radius, _CMP_LT_OS);
 
                 alpha += popcount(_mm256_movemask_ps(result));
@@ -113,7 +112,7 @@ void rasterize_line_avx(image_buffers *image, vec2 p0, vec2 p1, float width, uin
 
     __m256 ba_x = _mm256_sub_ps(p1_x, p0_x);
     __m256 ba_y = _mm256_sub_ps(p1_y, p0_y);
-    __m256 dot_ba = _mm256_add_ps(_mm256_mul_ps(ba_x, ba_x), _mm256_mul_ps(ba_y, ba_y));
+    __m256 dot_ba = _mm256_fmadd_ps(ba_x, ba_x, _mm256_mul_ps(ba_y, ba_y));
     __m256 one = _mm256_set1_ps(1.f);
     __m256 zero = _mm256_setzero_ps();
 
@@ -135,24 +134,24 @@ void rasterize_line_avx(image_buffers *image, vec2 p0, vec2 p1, float width, uin
                 // left 8 samples
                 __m256 pa_x = _mm256_sub_ps(sample_x_left, p0_x);
                 __m256 pa_y = _mm256_sub_ps(sample_y, p0_y);
-                __m256 dot_pa_ab = _mm256_add_ps(_mm256_mul_ps(ba_x, pa_x), _mm256_mul_ps(ba_y, pa_y));
+                __m256 dot_pa_ab = _mm256_fmadd_ps(ba_x, pa_x, _mm256_mul_ps(ba_y, pa_y));
                 __m256 h = _mm256_div_ps(dot_pa_ab, dot_ba);
                 h = _mm256_max_ps(zero, _mm256_min_ps(one, h));
 
                 __m256 v_x = _mm256_sub_ps(pa_x, _mm256_mul_ps(ba_x, h));
                 __m256 v_y = _mm256_sub_ps(pa_y, _mm256_mul_ps(ba_y, h));
                 __m256 v_y_sq = _mm256_mul_ps(v_y, v_y);
-                __m256 squared_distance = _mm256_add_ps(_mm256_mul_ps(v_x, v_x), v_y_sq);
+                __m256 squared_distance = _mm256_fmadd_ps(v_x, v_x, v_y_sq);
                 __m256 result = _mm256_cmp_ps(squared_distance, squared_width, _CMP_LT_OS);
                 alpha += popcount(_mm256_movemask_ps(result));
 
                 // right 8 samples (update only x part)
                 pa_x = _mm256_sub_ps(sample_x_right, p0_x);
-                dot_pa_ab = _mm256_add_ps(_mm256_mul_ps(ba_x, pa_x), _mm256_mul_ps(ba_y, pa_y));
+                dot_pa_ab = _mm256_fmadd_ps(ba_x, pa_x, _mm256_mul_ps(ba_y, pa_y));
                 h = _mm256_div_ps(dot_pa_ab, dot_ba);
                 h = _mm256_max_ps(zero, _mm256_min_ps(one, h));
                 v_x = _mm256_sub_ps(pa_x, _mm256_mul_ps(ba_x, h));
-                squared_distance = _mm256_add_ps(_mm256_mul_ps(v_x, v_x), v_y_sq);
+                squared_distance = _mm256_fmadd_ps(v_x, v_x, v_y_sq);
                 result = _mm256_cmp_ps(squared_distance, squared_width, _CMP_LT_OS);
                 alpha += popcount(_mm256_movemask_ps(result));
             }
