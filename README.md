@@ -1,5 +1,7 @@
 # flow
 
+![image info](./example_01.png)
+
 # what
 
 a command line program that produces high resolution png file with procedural 2d art
