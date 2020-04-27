@@ -34,7 +34,7 @@ void setup_config(config* cfg, int config_value, int random_seed)
             cfg->num_steps = 1000;
             cfg->num_particles = 1000;
             cfg->position_step = 0.001f;
-            cfg->starting_position = STARTING_POS_GRID;
+            cfg->starting_position = STARTING_POS_DISC;
 
             cfg->random_seed = random_seed;
             cfg->angle_quantization = 0.f;
@@ -44,7 +44,7 @@ void setup_config(config* cfg, int config_value, int random_seed)
 
             cfg->clear_color = 0xffffffff;
             cfg->start_color = 0xff000000;
-            cfg->end_color = 0xff000000;
+            cfg->end_color = 0xffffffff;
 
             cfg->sdf_func = sdf_cross;
         }

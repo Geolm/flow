@@ -17,6 +17,11 @@ void init_particles(image_buffers const* image, config const* cfg, particle* par
         cell_height = image->max_uv.y / rsqr_num_particles;
         grid_width = (int)rsqr_num_particles;
     }
+    
+    vec2 center = vec2_scale(image->max_uv, 0.5f);
+    vec2 radius;
+    radius.x = fminf(center.x, center.y);
+    radius.y = radius.x;
 
     for(int i=range_min; i<range_max; ++i)
     {
@@ -28,7 +33,6 @@ void init_particles(image_buffers const* image, config const* cfg, particle* par
             {
                 p->current_position = (vec2) {iq_random_float(&random_seed), iq_random_float(&random_seed)};
                 p->current_position = vec2_mul(p->current_position, image->max_uv);
-                p->last_position = p->current_position;
             }
             break;
         case STARTING_POS_GRID :
@@ -38,10 +42,18 @@ void init_particles(image_buffers const* image, config const* cfg, particle* par
 
                 p->current_position = (vec2) {x + iq_random_float(&random_seed) * cell_width, 
                                               y + iq_random_float(&random_seed) * cell_height};
-                p->last_position = p->current_position;
+            }
+            break;
+        case STARTING_POS_DISC :
+            {
+                float angle = iq_random_angle(&random_seed);
+                vec2 pos = vec2_add( vec2_scale(vec2_mul(vec2_angle(angle), radius), iq_random_float(&random_seed)), center);
+                p->current_position = pos;
             }
             break;
         }
+
+        p->last_position = p->current_position;
     }
 }
 

@@ -10,7 +10,7 @@
 
 #define STARTING_POS_GRID (0)
 #define STARTING_POS_RANDOM (1)
-#define STARTING_POS_CIRCLEPACKING (2)
+#define STARTING_POS_DISC (2)
 
 
 typedef struct
