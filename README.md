@@ -5,6 +5,7 @@
 # what
 
 a command line program that produces high resolution png file with procedural 2d art
+note : this is a on-going project, it is not finished. Only tested on my machines.
 
 # how
 
