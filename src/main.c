@@ -30,7 +30,7 @@ int main(int argc, char* const argv[])
     printf("flow %d.%d\n\n", FLOW_MAJOR_VERSION, FLOW_MINOR_VERSION);
     if (argc == 1)
     {
-        printf("usage : flow [-h height] [-w width] [-o output_filename] [-q quality_level 1-16]\n\n");
+        printf("usage : flow [-w width] [-h height] [-o output_filename] [-c config_index]\n\n");
         return 0;
     }
 
