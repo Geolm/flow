@@ -34,7 +34,8 @@ void setup_config(config* cfg, int config_value, int random_seed)
             cfg->num_steps = 1000;
             cfg->num_particles = 1000;
             cfg->position_step = 0.001f;
-            cfg->starting_position = STARTING_POS_DISC;
+            cfg->starting_position = STARTING_POS_LEFT;
+            cfg->starting_pos_param = 0.4f;
 
             cfg->random_seed = random_seed;
             cfg->angle_quantization = 0.f;

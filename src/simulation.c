@@ -51,6 +51,12 @@ void init_particles(image_buffers const* image, config const* cfg, particle* par
                 p->current_position = pos;
             }
             break;
+
+        case STARTING_POS_LEFT :
+            {
+                p->current_position.x = image->max_uv.x * iq_random_float(&random_seed) * cfg->starting_pos_param;
+                p->current_position.y = image->max_uv.y * iq_random_float(&random_seed);
+            }
         }
 
         p->last_position = p->current_position;

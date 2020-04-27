@@ -11,6 +11,7 @@
 #define STARTING_POS_GRID (0)
 #define STARTING_POS_RANDOM (1)
 #define STARTING_POS_DISC (2)
+#define STARTING_POS_LEFT (3)
 
 
 typedef struct
@@ -18,6 +19,7 @@ typedef struct
     int shape;
     int random_seed;
     int num_particles;
+    float starting_pos_param;
 
     float line_width;
     float position_step;
