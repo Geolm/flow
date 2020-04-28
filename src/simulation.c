@@ -66,12 +66,8 @@ void init_particles(image_buffers const* image, config const* cfg, particle* par
 //-----------------------------------------------------------------------------
 void update_particles(image_buffers const* image, config const* cfg, particle* particles, int range_min, int range_max)
 {
-    vec2 border;
-    if (cfg->shape == SHAPE_LINE)
-        border = (vec2) {cfg->line_width, cfg->line_width};
-    else
-        border = (vec2) {cfg->position_step, cfg->position_step};
-
+    vec2 extension = {cfg->line_width, cfg->line_width};
+    
     for(int i=range_min; i<range_max; ++i)
     {
         particle* p = &particles[i];
@@ -84,8 +80,25 @@ void update_particles(image_buffers const* image, config const* cfg, particle* p
 
             p->last_position = p->current_position;
             p->current_position = vec2_add(position, vec2_scale(vec2_angle(angle), cfg->position_step));
-            p->bbox.min = vec2_sub(vec2_min(p->current_position, p->last_position), border);
-            p->bbox.max = vec2_add(vec2_max(p->current_position, p->last_position), border);
+
+            switch(cfg->shape)
+            {
+            case SHAPE_LINE :
+                {
+                    p->bbox.min = vec2_sub(vec2_min(p->current_position, p->last_position), extension);
+                    p->bbox.max = vec2_add(vec2_max(p->current_position, p->last_position), extension);
+                }
+                break;
+            case SHAPE_DISC:
+                {
+                    vec2 center = vec2_scale(vec2_add(p->current_position, p->last_position), 0.5f);
+                    float radius = vec2_distance(p->current_position, p->last_position) * 0.5f;
+                    extension = (vec2) {radius, radius};
+                    p->bbox = (aabb) {vec2_sub(center, extension), vec2_add(center, extension)};
+                }
+                break;
+            }
+            
         }
         else
         {
