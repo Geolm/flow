@@ -5,19 +5,20 @@
 //-----------------------------------------------------------------------------
 void init_buckets(bucket* buckets, int buckets_count, vec2 max_uv, int height, int max_particles)
 {
-    float v_step = max_uv.y / (float) buckets_count;
-    float v = 0.f;
     int height_step = height / buckets_count;
-    int row_start = 0; 
+    int row_start = 0;
+    float ratio = max_uv.y / (float) height;
 
     for(int i=0; i<buckets_count; ++i)
     {
-        buckets[i].bbox.min = (vec2) {0.f, v}; v += v_step;
-        buckets[i].bbox.max = (vec2) {max_uv.x, v};
-        buckets[i].row_start = row_start; row_start += height_step;
+        buckets[i].row_start = row_start;
+        buckets[i].bbox.min = (vec2) {0.f, ((float) row_start) * ratio};
+        
+        row_start += height_step;
+        
         buckets[i].row_end = row_start;
+        buckets[i].bbox.max = (vec2) {1.f, ((float) row_start) * ratio};
     }
-    
     buckets[buckets_count-1].row_end = height;
     buckets[buckets_count-1].bbox.max = max_uv;
 }
