@@ -61,9 +61,8 @@ void rasterize_disc_avx(image_buffers *image, vec2 center, float radius, uint32_
                 __m256 delta_x = _mm256_sub_ps(sample_x_left, center_x);
                 __m256 delta_y = _mm256_sub_ps(sample_y, center_y);
 
-                delta_x = _mm256_mul_ps(delta_x, delta_x);
                 delta_y = _mm256_mul_ps(delta_y, delta_y);
-                __m256 squared_distance = _mm256_add_ps(delta_x, delta_y);
+                __m256 squared_distance = _mm256_fmadd_ps(delta_x, delta_x, delta_y);
                 __m256 result = _mm256_cmp_ps(squared_distance, squared_radius, _CMP_LT_OS);
 
                 alpha += popcount(_mm256_movemask_ps(result));
