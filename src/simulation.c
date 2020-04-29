@@ -57,12 +57,19 @@ void init_particles(image_buffers const* image, config const* cfg, particle* par
                 p->current_position.x = image->max_uv.x * iq_random_float(&random_seed) * cfg->starting_pos_param;
                 p->current_position.y = image->max_uv.y * iq_random_float(&random_seed);
             }
+            break;
         case STARTING_POS_BOTTOM :
             {
                 p->current_position.x = image->max_uv.x * iq_random_float(&random_seed);
-                p->current_position.y = image->max_uv.y - iq_random_float(&random_seed) * cfg->starting_pos_param;;
+                p->current_position.y = (1.f - (cfg->starting_pos_param * iq_random_float(&random_seed))) * image->max_uv.y;
             }
-            
+            break;
+        case STARTING_POS_TOP :
+            {
+                p->current_position.x = image->max_uv.x * iq_random_float(&random_seed);
+                p->current_position.y = iq_random_float(&random_seed) * cfg->starting_pos_param * image->max_uv.y;
+            }
+            break;
         }
 
         p->last_position = p->current_position;

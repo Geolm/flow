@@ -14,6 +14,7 @@
 #define STARTING_POS_DISC (2)
 #define STARTING_POS_LEFT (3)
 #define STARTING_POS_BOTTOM (4)
+#define STARTING_POS_TOP (5)
 
 typedef struct
 {
