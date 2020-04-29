@@ -76,8 +76,7 @@ static void rasterize_func(void *pArg, struct scheduler *s, struct sched_task_pa
             case SHAPE_DISC:
                 {
                     vec2 center = vec2_scale(vec2_add(p->last_position, p->current_position), 0.5f);
-                    float radius = vec2_distance(p->last_position, p->current_position) * 0.5f;
-                    rasterize_disc_avx(data->image, center, radius, data->color, b->row_start, b->row_end);
+                    rasterize_disc_avx(data->image, center, cfg->disc_radius, data->color, b->row_start, b->row_end);
                     break;
                 }
             }

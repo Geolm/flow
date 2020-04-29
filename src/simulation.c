@@ -57,6 +57,12 @@ void init_particles(image_buffers const* image, config const* cfg, particle* par
                 p->current_position.x = image->max_uv.x * iq_random_float(&random_seed) * cfg->starting_pos_param;
                 p->current_position.y = image->max_uv.y * iq_random_float(&random_seed);
             }
+        case STARTING_POS_BOTTOM :
+            {
+                p->current_position.x = image->max_uv.x * iq_random_float(&random_seed);
+                p->current_position.y = image->max_uv.y - iq_random_float(&random_seed) * cfg->starting_pos_param;;
+            }
+            
         }
 
         p->last_position = p->current_position;
@@ -92,8 +98,7 @@ void update_particles(image_buffers const* image, config const* cfg, particle* p
             case SHAPE_DISC:
                 {
                     vec2 center = vec2_scale(vec2_add(p->current_position, p->last_position), 0.5f);
-                    float radius = vec2_distance(p->current_position, p->last_position) * 0.5f;
-                    extension = (vec2) {radius, radius};
+                    extension = (vec2) {cfg->disc_radius, cfg->disc_radius};
                     p->bbox = (aabb) {vec2_sub(center, extension), vec2_add(center, extension)};
                 }
                 break;

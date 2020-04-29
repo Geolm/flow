@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include "sdf.h"
+#include "extern/vec2.h"
 
 #define SHAPE_LINE (0)
 #define SHAPE_DISC (1)
@@ -12,7 +13,7 @@
 #define STARTING_POS_RANDOM (1)
 #define STARTING_POS_DISC (2)
 #define STARTING_POS_LEFT (3)
-
+#define STARTING_POS_BOTTOM (4)
 
 typedef struct
 {
@@ -22,6 +23,7 @@ typedef struct
     float starting_pos_param;
 
     float line_width;
+    float disc_radius;
     float position_step;
     int num_steps;
     int starting_position;
@@ -30,6 +32,7 @@ typedef struct
     float sdf_angle_scale;
     float perlin_noise_scale;
     float random_angle_scale;
+    vec2 perlin_noise_uv_scale;
 
     uint32_t clear_color;
     uint32_t start_color;
