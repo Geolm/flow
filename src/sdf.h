@@ -70,5 +70,33 @@ static inline float sd_uneven_capsule( vec2 p, float r1, float r2, float h )
     return vec2_dot(p, (vec2){a,b}) - r1;
 }
 
+//-----------------------------------------------------------------------------
+static inline float sign_float(float value)
+{
+    if (value < 0.f)
+        return -1.f;
+    if (value > 0.f)
+        return 1.f;
+    return 0.f;
+}
+
+//-----------------------------------------------------------------------------
+static inline float sd_triangle(vec2 p, vec2 p0, vec2 p1, vec2 p2)
+{
+    vec2 e0 = vec2_sub(p1, p0);
+    vec2 e1 = vec2_sub(p2, p1);
+    vec2 e2 = vec2_sub(p0, p2);
+    vec2 v0 = vec2_sub(p, p0);
+    vec2 v1 = vec2_sub(p, p1);
+    vec2 v2 = vec2_sub(p, p2);
+    vec2 pq0 = vec2_scale(vec2_sub(v0, e0), clamp_float(vec2_dot(v0,e0)/vec2_dot(e0,e0), 0.f, 1.f));
+    vec2 pq1 = vec2_scale(vec2_sub(v1, e1), clamp_float(vec2_dot(v1,e1)/vec2_dot(e1,e1), 0.f, 1.f));
+    vec2 pq2 = vec2_scale(vec2_sub(v2, e2), clamp_float(vec2_dot(v2,e2)/vec2_dot(e2,e2), 0.f, 1.f));
+    float s = sign_float(e0.x*e2.y - e0.y*e2.x);
+    vec2 d = vec2_min(vec2_min((vec2){vec2_dot(pq0,pq0), s*(v0.x*e0.y-v0.y*e0.x)},
+                               (vec2){vec2_dot(pq1,pq1), s*(v1.x*e1.y-v1.y*e1.x)}),
+                               (vec2){vec2_dot(pq2,pq2), s*(v2.x*e2.y-v2.y*e2.x)});
+    return -sqrtf(d.x)*sign_float(d.y);
+}
 
 #endif
