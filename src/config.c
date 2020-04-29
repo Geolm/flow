@@ -7,8 +7,9 @@
 float sdf_line(vec2 p)
 {
     float d0 = sd_circle(p, (vec2) {0.0f, 0.0f}, 0.4f);
-    float d1 = sd_circle(p, (vec2) {0.5f, 0.4f}, 0.2f);
-    return smooth_min_cubic(d0, d1, 0.1f);
+    float d1 = sd_triangle(p, (vec2) {0.6f, 0.0f}, (vec2) {0.3f, 0.3f}, (vec2) {0.8f, 0.5f});
+    float d2 = sd_circle(p, (vec2) {1.0f, 0.6f}, 0.4f);
+    return smooth_min_cubic(d0, smooth_min_cubic(d1, d2, 0.1f), 0.1f);
 }
 
 //-----------------------------------------------------------------------------
@@ -71,7 +72,7 @@ void setup_config(config* cfg, int config_value, int random_seed)
             cfg->random_seed = random_seed;
             cfg->angle_quantization = 0.f;
             cfg->sdf_angle_scale = 1.0f;
-            cfg->perlin_noise_scale = 0.75f;
+            cfg->perlin_noise_scale = 0.0f;//75f;
             cfg->perlin_noise_uv_scale = (vec2) {5.f, 5.f};
             cfg->random_angle_scale = 0.0f;
 
